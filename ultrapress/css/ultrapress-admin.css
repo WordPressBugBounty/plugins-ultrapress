@@ -1,0 +1,42 @@
+/* Ultrapress Admin Styles */
+@import 'tutorial-popups.css';
+
+/* General Admin Styles */
+.ultrapress-admin-container {
+    padding: 20px;
+}
+
+/* Debug styles for carousel */
+.tips-carousel-container {
+    display: block !important;
+    visibility: visible !important;
+    position: fixed !important;
+    bottom: 5px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 99999 !important;
+    background: white !important;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2) !important;
+    padding: 5px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    border-radius: 8px !important;
+    width: auto !important;
+    min-width: 600px !important;
+}
+
+.tips-carousel {
+    position: relative !important;
+    overflow: hidden !important;
+    padding: 5px !important;
+}
+
+.tip-slide {
+    display: none !important;
+}
+
+.tip-slide.active {
+    display: block !important;
+}
+
+/* Add your other admin styles here */

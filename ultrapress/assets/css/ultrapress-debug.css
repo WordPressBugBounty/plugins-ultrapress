@@ -1,0 +1,71 @@
+.ultrapress-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    max-width: 350px;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    animation: ultrapress-slide-in 0.3s ease-out;
+}
+
+@keyframes ultrapress-slide-in {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.ultrapress-notification-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.ultrapress-notification p {
+    margin: 0;
+    padding-right: 20px;
+}
+
+.ultrapress-notification-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    color: inherit;
+    opacity: 0.5;
+}
+
+.ultrapress-notification-close:hover {
+    opacity: 1;
+}
+
+.ultrapress-notification-error {
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+    color: #991b1b;
+}
+
+.ultrapress-notification-warning {
+    background-color: #fef3c7;
+    border: 1px solid #f59e0b;
+    color: #92400e;
+}
+
+.ultrapress-notification-success {
+    background-color: #dcfce7;
+    border: 1px solid #22c55e;
+    color: #166534;
+}
+
+.ultrapress-notification-info {
+    background-color: #dbeafe;
+    border: 1px solid #3b82f6;
+    color: #1e40af;
+}

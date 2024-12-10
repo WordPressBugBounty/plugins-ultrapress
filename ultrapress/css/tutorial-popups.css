@@ -1,0 +1,76 @@
+.tutorial-popup {
+    position: fixed;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    max-width: 300px;
+    display: none;
+}
+
+.tutorial-popup.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.tutorial-popup-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #2271b1;
+}
+
+.tutorial-popup-content {
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 15px;
+    color: #50575e;
+}
+
+.tutorial-popup-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.tutorial-button {
+    padding: 8px 15px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s;
+}
+
+.tutorial-button-next {
+    background-color: #2271b1;
+    color: white;
+}
+
+.tutorial-button-next:hover {
+    background-color: #135e96;
+}
+
+.tutorial-button-prev,
+.tutorial-button-skip {
+    background-color: #f0f0f1;
+    color: #2c3338;
+}
+
+.tutorial-button-prev:hover,
+.tutorial-button-skip:hover {
+    background-color: #dcdcde;
+}
+
+.highlight-element {
+    position: relative;
+    z-index: 999;
+    box-shadow: 0 0 0 4px rgba(34,113,177,0.3);
+    border-radius: 4px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
