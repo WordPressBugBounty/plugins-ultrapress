@@ -234,7 +234,7 @@ class Ultrapress_Admin {
 	} 
 
 	public function ultrapress_admin_documentation_page () {
-		include_once( plugin_dir_path( __FILE__ ) . 'partials/ultrapress-admin-display-documentation.html' );
+		include_once( plugin_dir_path( __FILE__ ) . 'partials/ultrapress-admin-documentation.php' );
 	}
 	/** 
 	 * ajax callback: run circuit

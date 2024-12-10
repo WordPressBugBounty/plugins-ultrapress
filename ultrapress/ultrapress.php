@@ -10,7 +10,7 @@
  * Plugin Name:       Ultrapress 
  * Plugin URI:        https://wordpress.org/plugins/ultrapress/
  * Description:       Build and connect features and plugins with visual scripting
- * Version:           0.0.21
+ * Version:           0.0.22
  * Author:            meedawi
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -38,7 +38,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  */
-define( 'ULTRAPRESS_VERSION', '1.0.17' );
+define( 'ULTRAPRESS_VERSION', '1.0.18' );
 define( 'ULTRAPRESS_PREVIOUS_STABLE_VERSION', '1.0.0' );
 
 define( 'ULTRAPRESS__FILE__', __FILE__ );
