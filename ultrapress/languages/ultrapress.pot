@@ -1,0 +1,96 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-15 23:34+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin/partials/ultrapress-admin-template.php:53 includes/plugin.php:1324
+msgid "check_ajax_referer problem"
+msgstr ""
+
+#: admin/partials/ultrapress-admin-template.php:54 includes/plugin.php:1336
+msgid "there is no circuit with this name"
+msgstr ""
+
+#: circuits/example-notification-system/components/add comment/setup.php:376
+#: circuits/example-notification-system/components/add post/setup.php:655
+#: circuits/example-notification-system/components/get-meta/setup.php:356
+#: circuits/example-notification-system/components/mp-node/setup.php:287
+#: circuits/example-notification-system/components/mp-node-1/setup.php:274
+#: circuits/example-notification-system/components/update-meta/setup.php:363
+#: circuits/meed-notification-register-post-type/components/register-post-type/setup.php:387
+#: circuits/meed-notification-send/components/add comment/setup.php:376
+#: circuits/meed-notification-send/components/add post/setup.php:655
+#: circuits/meed-notification-send/components/get-meta/setup.php:356
+#: circuits/meed-notification-send/components/mp-node/setup.php:287
+#: circuits/meed-notification-send/components/mp-node-1/setup.php:274
+#: circuits/meed-notification-send/components/update-meta/setup.php:363
+#: components/add-page/setup.php:390 components/add-post/setup.php:654
+#: components/delete-post/setup.php:309 components/delete_option/setup.php:307
+#: components/get_option/setup.php:324
+#: components/meed-add-comment/setup.php:375
+#: components/meed-get-meta/setup.php:355
+#: components/meed-register-post-type/setup.php:386
+#: components/meed-update-meta/setup.php:362 components/node/setup.php:286
+#: components/node-1/setup.php:273 components/update_option/setup.php:333
+#: export/ultrapress/components/add comment/setup.php:376
+#: export/ultrapress/includes/plugin.php:1251 includes/plugin.php:1398
+#: templates/component/setup.php:349
+#: templates/plugin/ultrapress/includes/plugin.php:1251
+msgid "Ultrapress"
+msgstr ""
+
+#: circuits/example-notification-system/components/add post/page-templates/bnadm.php:68
+#: circuits/example-notification-system/components/add post/page-templates/pepsico.php:68
+#: circuits/example-notification-system/components/add post/page-templates/space.php:69
+#: circuits/meed-notification-send/components/add post/page-templates/bnadm.php:68
+#: circuits/meed-notification-send/components/add post/page-templates/pepsico.php:68
+#: circuits/meed-notification-send/components/add post/page-templates/space.php:69
+#: components/add-page/page-templates/pepsico.php:68
+#: components/add-page/page-templates/space.php:69
+#: components/add-post/page-templates/bnadm.php:68
+#: components/add-post/page-templates/pepsico.php:68
+#: components/add-post/page-templates/space.php:69
+msgid "«"
+msgstr ""
+
+#: circuits/example-notification-system/components/add post/page-templates/bnadm.php:69
+#: circuits/example-notification-system/components/add post/page-templates/pepsico.php:69
+#: circuits/example-notification-system/components/add post/page-templates/space.php:70
+#: circuits/meed-notification-send/components/add post/page-templates/bnadm.php:69
+#: circuits/meed-notification-send/components/add post/page-templates/pepsico.php:69
+#: circuits/meed-notification-send/components/add post/page-templates/space.php:70
+#: components/add-page/page-templates/pepsico.php:69
+#: components/add-page/page-templates/space.php:70
+#: components/add-post/page-templates/bnadm.php:69
+#: components/add-post/page-templates/pepsico.php:69
+#: components/add-post/page-templates/space.php:70
+msgid "»"
+msgstr ""
+
+#: circuits/example-notification-system/components/add post/page-templates/bnadm.php:70
+#: circuits/example-notification-system/components/add post/page-templates/pepsico.php:70
+#: circuits/example-notification-system/components/add post/page-templates/space.php:71
+#: circuits/meed-notification-send/components/add post/page-templates/bnadm.php:70
+#: circuits/meed-notification-send/components/add post/page-templates/pepsico.php:70
+#: circuits/meed-notification-send/components/add post/page-templates/space.php:71
+#: components/add-page/page-templates/pepsico.php:70
+#: components/add-page/page-templates/space.php:71
+#: components/add-post/page-templates/bnadm.php:70
+#: components/add-post/page-templates/pepsico.php:70
+#: components/add-post/page-templates/space.php:71
+msgid "Posts navigation"
+msgstr ""
