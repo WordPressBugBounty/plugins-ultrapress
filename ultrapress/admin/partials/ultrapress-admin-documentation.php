@@ -15,6 +15,10 @@
     <section class="doc-section">
         <h2>Introduction</h2>
         <p>Welcome to UltraPress - a powerful WordPress plugin for creating automated workflows and circuits. This documentation will guide you through all aspects of using UltraPress effectively.</p>
+        
+        <div class="ultrapress-video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/mQlrCUliSTM?si=6711Gb5TejIwa6sa" title="UltraPress Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
     </section>
 
     <!-- Getting Started -->

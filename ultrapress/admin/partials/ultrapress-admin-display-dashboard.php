@@ -21,6 +21,9 @@ if (!defined('ABSPATH')) {
         <div class="ultrapress-welcome-section">
             <h2><?php echo esc_html__('Welcome to Ultrapress', 'ultrapress'); ?></h2>
             <div class="ultrapress-welcome-content">
+                <div class="ultrapress-video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/mQlrCUliSTM?si=6711Gb5TejIwa6sa" title="UltraPress Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
                 <p><?php echo esc_html__('Ultrapress is a powerful suite of integrated tools for WordPress developers and users. Build plugins, features, and circuits without writing a single line of code.', 'ultrapress'); ?></p>
                 <p><?php echo esc_html__('Think of Ultrapress as Elementor for plugins - it lets you create complex functionalities using a visual scripting system, making plugin development accessible to everyone.', 'ultrapress'); ?></p>
             </div>

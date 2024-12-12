@@ -40,6 +40,15 @@ class Ultrapress_Class {
 	 */
 	public static $circuits = array();
 	/**
+	 * Maximum recursion depth for circuit processing
+	 */
+	private static $MAX_RECURSION_DEPTH = 50;
+
+	/**
+	 * Current recursion depth during circuit processing
+	 */
+	private static $current_depth = 0;
+	/**
 	 * components
 	 *
 	 * Holds the components
@@ -61,6 +70,7 @@ class Ultrapress_Class {
 	 * @var composed_components
 	 */
 	public static $composed_components = array();
+	
 	/**
 	 * circuits_of_composed_components
 	 *
@@ -1162,6 +1172,16 @@ class Ultrapress_Class {
  	 * @param string   $path  : path of current processed component
 	 */
 	public static function recurrent_process($current_circuit, $key_of_component, $path, $is_inside_composed_circuit = 0, $key_of_composed_circuit = 0 ) {	
+        // Add depth tracking
+        self::$current_depth++;
+    
+        // Check if we've exceeded maximum depth
+        if (self::$current_depth > self::$MAX_RECURSION_DEPTH) {
+            error_log('UltraPress Warning: Maximum recursion depth exceeded. Circuit may contain an infinite loop. path is:' . $path);
+            self::$current_depth--;
+            return false;
+        }
+
 		if (! array_key_exists( 'arch', $current_circuit)) {
 			return false;
 		} 
