@@ -39,7 +39,7 @@ The developer will eventually find himself spending days, or even weeks, trying 
 
 ultrapress solve this problem by introducing a new approach to develop in wordpress. Ultrapress is like a logo game. You can build the features that you want with circuits and components without writing code.
 
-Please refer to  [this page](https://ultra-press.com/) for all the technical information and support documentation on the ultrapress plugin. or to [this page](https://www.roukman.com/%d8%a7%d9%84%d8%aa%d8%b1%d8%a7%d8%a8%d8%b1%d8%b3-ultrapress-%d9%85%d9%82%d8%a7%d8%b1%d8%a8%d8%a9-%d8%ab%d9%88%d8%b1%d9%8a%d8%a9-%d9%84%d8%aa%d8%b7%d9%88%d9%8a%d8%b1-%d8%a7%d9%84%d9%85%d9%88%d8%a7/) for arabic informations.
+Please refer to  [this page](https://drive.google.com/file/d/17IrXe726QXmoYC-dVpAVsVs-U_nTxaX9/view) for all the technical information and support documentation on the ultrapress plugin.
 
 == Support us ==
 
@@ -51,7 +51,7 @@ I like to dedicate my time to Ultrapress because I believe in it, I believe that
 
 
 
-[youtube https://youtu.be/mQlrCUliSTM?si=xyL5cQM47C9h9GhL]
+[youtube https://www.youtube.com/watch?v=mQlrCUliSTM]
 
 
 == Installation ==
@@ -64,7 +64,7 @@ I like to dedicate my time to Ultrapress because I believe in it, I believe that
 == Frequently Asked Questions ==
 
 = Support and Documentation =
-Please refer to [this page](https://ultra-press.com/) for all the technical information and support documentation on the ultrapress plugin.
+Please refer to [this page](https://drive.google.com/file/d/17IrXe726QXmoYC-dVpAVsVs-U_nTxaX9/view) for all the technical information and support documentation on the ultrapress plugin.
 
 
 

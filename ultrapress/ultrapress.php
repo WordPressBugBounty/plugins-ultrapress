@@ -10,7 +10,7 @@
  * Plugin Name:       Ultrapress 
  * Plugin URI:        https://wordpress.org/plugins/ultrapress/
  * Description:       Build and connect features and plugins with visual scripting
- * Version:           0.0.26
+ * Version:           0.1.0
  * Author:            meedawi
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
