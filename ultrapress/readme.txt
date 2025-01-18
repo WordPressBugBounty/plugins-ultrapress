@@ -9,9 +9,17 @@ Tested up to: 6.7
 Stable tag: 0.0.7
 Requires PHP: 5.6.0
 
+## Coming Soon: AI Agents for WordPress
+
+**Get ready to supercharge your website with AI Agents!** Our next major update to Ultrapress will introduce cutting-edge AI integrations from your favorite providers, like OpenAI and Claude. Imagine seamlessly generating content, instantly translating text, summarizing posts, and more—all within your WordPress admin **without writing a single line of code!**
+
+Stay tuned: once AI Agents arrive in Ultrapress, you'll be able to automate powerful tasks, save hours of manual work, and unlock endless possibilities for your sites and clients. **Keep Ultrapress active** to be among the first to experience the AI revolution in WordPress. Don't miss out on what's coming next!
+
+
 Ultrapress is a meta plugin. I.e. a plugin that creates plugins.
 
 Ultrapress is a visual scripting system to build and connect features and plugins based on the use of graphical elements representing native WordPress mechanisms.
+
 
 
 == Description ==

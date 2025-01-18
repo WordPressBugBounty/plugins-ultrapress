@@ -1,0 +1,879 @@
+﻿Ultrapress
+
+
+Introduction
+What is ultrapress?
+Ultrapress is a suite of integrated tools for WordPress developers and users to design and build plugins, features, and circuits without writing a line of code. You can use ultrapress to update post data, add comments, create Shortcodes, and whatever you want.
+Ultrapress for plugins is like Elementor for templates, it lets you create plugins and circuits without the need to write any code because it uses a visual scripting system. Instead of writing codes, just bind components inside circuits to create the features you want. 
+You can create plugins with ultrapress in minutes and upload them to WordPress directory, and they will work normally even if ultrapress is not installed. Ultrapress is useful for WordPress developers, as they can leverage the power of ultrapress to develop websites for their clients within days, sometimes even hours. 
+
+
+Prerequisites
+No prior programming Knowledge is required. If you have worked with WordPress before, you will discover that it is very easy to add your own custom features.
+   
+Why ultrapress?
+WordPress is a content management system, one of WordPress's biggest features, is that it can be expanded with plugins to add new features and functionalities in the areas of SEO, security, search, and more.
+This is a powerful feature, especially with the huge WordPress Library, which contains more than 50,000 plugins. On the other hand, there is a problem that all WordPress developers know, which is the integrability of plugins.
+ Wordpress plugins are separate pieces of software composed of multiple scripts. When you have two plugins each performing a different function, you may want to combine them and make them work together as if they were a single plugin.
+Linking two plugins and making them work together as one plugin is a very complex process and takes too much time. Sometimes it is easier to create a new plugin rather than trying to combine two plugins.
+Some developers try to address this issue by inserting hooks at certain points of the workflow. While this may provide a partial solution and allow programmers to connect plugins, this solution cannot be relied on because not all plugins have hooks that can be used to integrate with other plugins. And even if these plugins have hooks, to link plugin them together, you will have to spend a considerable amount of time studying them, trying to understand them, and guessing which hooks are best suited to work with. It is impossible for non-programmers, and annoying and time consuming for WordPress developers.
+The developer will eventually find himself spending days, or even weeks, trying to link plugins to get the features he wants. If you have tried this like me, you have probably wasted a lot of time before finally give up and start developing the plugin that you want from scratch. This is annoying, especially that you know that all the features you want already exist in other plugins, but you cannot combine them.
+Ultrapress is like a logo game. You can build the features that you want with circuits and components without writing code.  
+  
+  
+A circuit is a set of interconnected components. Each component does a particular task, like inserting a post or a comment, or reading meta-data, or adding a page. Some components may require arguments to work. After the task is performed by the component, it will trigger a hook.
+   
+
+
+ This component has two outputs: Output 1 and Output 2. After the component finishes its work, it will activate one of the outputs. For example, if the component succeeds in its task, it will trigger the hook of output 1; otherwise, the output 2 will be triggered.
+You can combine two components to do a complex task. Let’s suppose that we have another component that add a comment to a specific post. If the component added the comment successfully, it will trigger output 1, which will trigger the component send-email to send an email to notify the post author that someone has added a comment to his post.
+We can do that easily with ultrapress, all you have to do is to link the two components and fill some fields.
+  
+
+  
+Circuits
+Go to ultrapress page in the admin area, in the header, there is a list containing installed circuits. Choose the circuit ultra/test. 
+  
+
+If you click anywhere in the white area, the sidebar will display some info about the circuit, such as the name of the circuit and a brief description. you can also drag the circuit svg, and the components.
+ The description of the circuit says that this circuit "adds a comment to a post, and then updates the option number_of_comments  to store the total number of comments".
+You will notice that the circuit has two components, the first one is the main component on the top (the key component). If you clicked on that component, ultrapress will display some info about the component in the sidebar, such as its name and a brief description.
+This component accepts three argument. Which are user_id, comment_post_ID, and comment_content. The red star near the argument name means that argument is required, and without it, the component will not work properly.
+When you call this component with 3 arguments, it will try to add a comment to the post with the given ID, if the component added the comment successfully; it will trigger the left hook (output 1). Click on it. You will notice in the sidebar that this output will give us 3 Arguments: user_id, which represent the author of the comment, comment_post_ID, which represents the ID or the post, and comment_content, which represent the ID of the new comment.
+If the component fails to add the comment, the other (right) hook will be triggered, click on it. You will notice in the description this phrase "ERROR: comment not added", For some reason the component fails to add the comment. The component will give us two arguments, which are user_id and comment_post_ID.
+Let us suppose that we want the following feature: We want a component that adds a comment to a certain post, if it works successfully and added the comment to the post, we want to update a counter that store the number of comments in the website. We will assume that this counter is stored in the option number_of_comments.
+Every time we add a comment, we want to increase the value of number_of_comments. To do this we added another component (see the picture).
+Click on the second component, as its name indicates, it updates the value of an option, and it accepts two arguments. The first one is option, which represents the name of the option you want to update. The second is called value, which represents the new value.
+  
+
+There is a line from the first output of the component ultra-add-comment to the input of the component ultra-update-option. After calling the component ultra-add-comment, if the comment was added successfully, it will trigger the left output, which will trigger the ultra-update-option component.
+Click the first output of the ultra-add-comment component. This output will pass three arguments, user_id, comment_ post_ID, and comment_id. We can use those arguments to construct the arguments of the next component, which is update_option.
+Below args options there are two arguments;  option and value. They are the two arguments that the second component accepts.
+The left hook, i.e. the success hook, will be triggered when the first component (ultra-add-comment) succeeds in adding the comment. As you notice, this hook is associated with the ultra-update-option component which means that the component option-update is triggered each time the hook of first output of ultra-add-comment is triggered, i.e. when the component adds the comment.
+  
+
+Under args options, you will notice the argument option, which specifies the name of the option we want to update, that red star (*) next to it mean that it is required. Click the button next to it.
+ 
+
+
+  
+
+A window will open, at the top of the window you will see a list of arguments. these arguments will come from the hook that triggered the component, i.e. the success hook of the ultra-add-comment component). There are three components:
+* comment_id: ID of Newly added Comment 
+* user_id: ID of User who added the comment
+* comment_post_ID: ID of the post that the comment was added to 
+We have to define the name of the option that we want to update. There are many ways to do this, we will start with the simplest. From the list type of mapping, choose literal, go to the input text below it, and enter the name of the option number_of_comments (see figure above) ‎.
+literal means that the value of the argument we are editing -  option in this case - will be equal to the value entered in the text input. Which is in this case number_of_comments. Click on the Save button.
+We have now to determine the value we want to pass to this option, under args option, ‎ click on the button next to the argument value‎.
+ 
+  
+
+
+
+A new window opens, notice that it includes in addition to the three arguments that the component ultra-add-comment send to us, two additional arguments: option, which represent the value of option argument that we entered before. And old_value, which represents the old value of the option number_of_comments, i.e. the previous number of comments. 
+We said that every time a new comment is added we want to increase the counter number_of_comments by 1. When this circuit is triggered it will add a comment, and if successful, it will trigger the component option-update that will update the value of the option number_of_comments to the old number_of_comments value + 1. If the value of number_of_comments (the number of comments added) Equal 10, so after adding the comment we want to increase it by 1, to equal 11.
+ To do this we have to take the value of old_value, and add it to 1, so that the new option's value is old_value + 1, but how do we do that?
+From type of mapping list, choose the option eval, and in the text iput below, type the phrase old_value + 1, old_value represents the old value of number_of_comments. Click save button.
+When you choose eval, ultrapress will evaluate the content of the string you entered in the text box. In the example above, ultrapress will replace old_value in the string old_value + 1 with its value. eval is suitable for simple operations. If you want more complex operations, it is best to use the option function.
+click on the button    in the header to save the circuit.
+When launching the circuit ultra/test, it will launch the key component, which is the ultra-add-comment component. This component needs 3 arguments. These arguments should be passed to the circuit when called. 
+After calling the component ultra-add-comment, it will try to add a comment to the selected post. If successful, the component will trigger the left hook, which is linked to the component ultra-update-option, with 3 arguments, namely comment_id, user_id, and comment_post_ID. After that the second component will be triggered, it needs two arguments, option, and value:
+* option: We have chosen literal from the list type of mapping, this means that Ultrapress will take the string in the text box as it is (note that it will replace any appearance of an argument name passed to the component with its value, you can read more from here.)
+* value: we have chosen eval, meaning that Ultrapress will treat the string in the text input as an expression, evaluate it, and replace the names of the arguments by their values. We put the string  old_value + 1 in the text input. The first thing ultrapress will do is that it will replace the arguments names in the string with their values, in this case it will replace old_value with its value, i.e. the old value of the option number_of_comments, which we obtained from the list of arguments at the top of the window. After ultrapress replaces all arguments names with their values, the expression will be evaluated. For example, if the value of old_value is 7, then the expression becomes old_value + 1 = 7 + 1 = 8. Therefore, ultrapress will pass the value = 8 to the component ultra-update-option.
+After ultrapress calculates the values of arguments, it will pass them to the component ultra-update-option:
+array(
+        'option' => 'number_of_comments'‎‎,
+        'value' => 8,
+        );
+	
+
+How to Call circuits
+the first method: from ultrapress page
+Click on the triangle    button in the header, a window will open.
+  
+ 
+
+
+The window contains several fields, these fields represent the arguments that the circuit expects. Fill out these fields with the appropriate values.
+* user_id: ID of the user that will add the comment. We will give it 1.
+* comment_post_ID: represents the ID of the post to which we will add the comment. We have chosen 1, which is the ID of the first post in WordPress (hello world). If the post does not exist, you can choose any other post ID.
+* comment_content: the content of the comment, and we put "hello world, this is ultrapress".
+Now click the button run circuit then go to the post that you have identified. You will notice that a new comment has been added to the post. the value of the option number_of_comments increases every time you run the circuit. 
+
+
+We want to modify the circuit so that it will add a new comment to the post, then increases the value of number_of_comments, and then adds another comment to the same post to display the value of the option number_of_comments.
+We already have two components that perform the first two tasks, we just need to add another component to add the second comment. Double click on the white area.
+  
+
+Choose the component ultra-add-comment from the list. Then link the left output of the component ultra-update-option, which will be triggered when the option is successfully updated, to the component ultra-add-comment that you just added. You can do this by clicking on the small red circle at the end of the second output in ultra-update-option and then clicking on the green circle at the top of the component ultra-add-comment.
+   
+Click on the left output of ultra-update-option.
+
+
+  
+ Note that this output has one argument, value, which represents the value of the option that the component has updated. Now we want to fill in the arguments that the component ultra-add-comment takes, which are user_id, comment_post_ID, and comment_content. Click on the button next to user_id.
+
+
+ we want to give this argument the value of user_id that we passed to the circuit when we called it. However, you will notice that there is only one available argument, which is the value that the component ultra-update-option passed to us.
+  
+ 
+
+
+To get the value of user_id that we passed previously when we called the circuit, go to the first component and click on the left output, check the checkbox of the arguments.
+   
+
+
+When you check the checkbox in front of an argument, ultrapress will export it to the next component outputs. This way you can use them in the later component. Now if you go to the component ultra-update-option and click on the left output, you will notice that new argument have been added to the arguments list.
+  
+
+These are 3 new arguments:
+* _exp_comment_id  →  comment_id 
+* _exp_user_id  →  user_id
+* _exp_comment_post_ID  →  comment_post_ID
+
+
+Ultrapress adds the prefix _exp_ to the argument name to avoid name overlapping. Now if you click on the button next to user_id you will notice that you have now 4 arguments available. We want to pass the value of user_id that was given to us by the first component ultra-add-comment. To do so, choose map from the list type of mapping. and type _exp_user_id in the input text below mapping.
+   
+When you choose map from the drop-down menu, Ultrapresss will pass the value of the argument whose name is in the text input without modification.
+Do the same with comment_post_ID.
+   
+
+
+Now click on the button next to the comment_content. Choose literal from the drop-down menu. Then type the message you want in the text box. We will write the following message 'number of comments added = value'. Since we chose literal, Ultrapress will take this string and replace the names of the arguments that appear in it (listed in the top of the window) with their real values. Since there is an argument named value in the list of arguments. It will replace it with its real value, which is the value of the option number_of_comments.
+  
+
+Save the circuit, and then execute it. You will notice that two comments have been added to the post that you give its ID, the first comment contains the message that you passed to the circuit, and the second comment contains the message 'number of comments added = value', value is the number of comments.
+
+
+The second method: direct calling
+Each circuit has a hook. This hook is just a normal WordPress hook, and you can call it via do_action function.
+For the circuit above, you can see the circuit hook on the sidebar next to trigger of circuit, which is ultra/test.
+Now, if you want to call this circuit, all you have to do is to trigger this hook with the arguments that the circuit accepts, which are the arguments of the key component.
+
+
+// array containing the arguments of circuit
+$args = array(
+        'user_id' => 1,
+        'comment_post_ID' => 1,
+        'comment_content' => 'this comment is from the circuit ultra/test',
+        );
+
+
+do_action( 'ultra/test' , $args);  // 'ultra/test' is the trigger of the circuit 
+	
+
+Copy the code above into the theme's functions.php file, then go to the post page. You will notice that every time you update the page, ultrapress will execute test circuit, and two new comments will be added to the post. and option number_of_comments will increase by 1.
+
+
+The third method: hooks
+the circuit ultra/test updates option number_of_comments, which store the number of comments added. However, the problem is that updating number_of_comments only occurs when we add a comment via the circuit ultra/test. If someone adds a comment from outside the circuit, for example from the front end, the option number_of_comments will not be updated.
+We will create a new circuit that updates the option every time a comment is added to any post. Click on the button +  on the header. A new window will open:
+  
+
+There are 4 fields:
+* trigger of circuit: represents the hook of this circuit, every time this hook is executed via do_action function the circuit will be executed.
+* name of circuit: the name of the circuit. This name will be used to name the circuit directory, so it should contain only letters, numbers, - and _.
+* Description: brief description of the circuit
+* choose the first component: the key component of the circuit. We will choose ultra/update_option.
+
+
+Click the button Save. A new circuit will be created, this circuit will contain the key component  ultra-update-option. We want to execute this circuit every time a new comment is added to a post. Ultrapress gives you a special way to trigger circuits, you can trigger a circuit every time a particular hook is triggered.
+ We want to increase the option number_of_comments  every time a new comment is added. To do that, click on an empty space in the white area, press the button add new trigger in the sidebar, a window will open.
+  
+
+ There are several hooks, we will choose comment_post, which is called when adding a comment to a post. Click on the button add trigger. Now the hook name will be added.
+Note that some lines will be added:
+  
+You see The name of the hook that we added, and under it you see the two arguments of the circuit.
+When the hook is triggered, it will call the circuit and passes the arguments to it. In this case, there are two arguments that the circuit accepts: option and value. Click on the button corresponding to each of them and a window will appear to edit the variable.
+For the argument option, which is the name of the option we want to update, we will give it number_of_comments, which is the option name. To do so, choose literal from type of mapping list, and in mapping text input type number_of_comments.
+  
+ 
+
+
+We want to give to the argument value the old value of the option number_of_comments + 1. To do that, choose eval from list type of mapping, and in mapping type old_value + 1
+   
+Now, every time a new comment is added (even if it's added from front end), the hook comment_post will be triggered, which in turn will trigger our circuit, which will increase the value of the option number_of_comments.
+fourth method - ajax
+Any circuit can be triggered directly via ajax from the browser.
+Before we start explaining this method, go to the ultrapress page, and go the circuit ultra/test and activate the checkbox ajaxable, this is necessary to be able to trigger any circuit via AJAX. 
+  
+
+Save the circuit.
+We will create a new page, create a new file in the template folder, and name it test-ultrapress-template.php:
+
+
+<?php
+/*
+Template Name: ultrapress test Templates
+*/
+get_header(); ?>
+
+
+  <div class="container pt-4 mama">
+    <h4 class="open-projects m-3 mb-4"> add comment  </h4>
+    <div id="primary" class="content-area">
+      <main id="main" class="site-main">
+        <form id="new_post" class="m-3"  name="new_post" method="post">
+
+
+          <div class="form-group">
+            <label for="title"> user ID </label><br />
+            <input type="number" id="user-id" value="" tabindex="1" size="30" name="email" />
+          </div>
+          <div class="form-group">
+            <label for="title"> post ID </label><br />
+            <input type="number" id="post-id" value="" tabindex="1" size="30" name="email" />
+          </div>
+
+
+          <div class="form-group">
+            <label for="title"> contenu </label><br />
+           <textarea  rows="3" id="comment-contenu"  class="form-control-plaintext border">  </textarea>
+          </div>
+
+
+          <?php $nonce = wp_create_nonce( 'micropress_nonce' ); ?>
+          <button type="button" id="add-email" data-nonce="<?php echo $nonce; ?>" class="btn btn-primary"> send </button>
+
+
+        </form>
+
+
+      </main><!-- #main -->
+    </div><!-- #primary -->
+
+
+            <?php get_sidebar(); ?>
+  </div>
+
+
+<?php
+get_footer();
+
+
+	
+
+Now create a new page titled test-ultrapress, and choose the template ultrapress test Template.
+   
+
+
+Open a new file, named test-ultrapress.js, and place it in a folder named js in the Template folder. Write the following:
+
+
+ (function( $ ) {
+$(document).ready(function() {
+  $('#add-comment-test').click(function(){
+    var $button = $( this );
+    user_id = $('#user-id-test').val();
+    post_id = $('#post-id-test').val();
+    content = $('#comment-content-test').val();
+
+
+    var data = {
+        'action' : 'ultrapress',
+        'trigger_of_circuit' : 'ultra/test',
+        'ultrapress_nonce': $(this).data('nonce'),
+        'args' : {
+          'user_id' : user_id,
+          'comment_post_ID' : post_id,
+          'comment_content' : content,
+        },
+    };
+    $.ajax({
+      type: "POST",
+      url: mysettings.ajaxurl,
+      data: data,
+      dataType: 'json',
+      success: (data,status,error) => {
+            },
+      error: (data,status,error) => {
+            },
+    })  
+  });
+});
+
+
+})( jQuery );
+	
+
+You need to download this script, to do this, write the following code in the functions.php file of the theme:
+
+
+/**
+ * Enqueue scripts and styles.
+ */ 
+function Enqueue_test_ultrapress_scripts() {
+        wp_enqueue_script( 'test-ultrapress', get_template_directory_uri() .   '/js/test-ultrapress.js', array('jquery'), filemtime( get_stylesheet_directory() . '/js/test-ultrapress.js' ), true );
+
+
+
+
+        wp_localize_script( 'test-ultrapress', 'mysettings', array(
+                     'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+                'home_url'   => home_url(),
+    ) );
+
+
+}
+add_action( 'wp_enqueue_scripts', 'Enqueue_test_ultrapress_scripts' );
+	
+
+Now go to the the page that you created, you will see a form, fill it with the appropriate data:
+  
+
+ 
+Click send and go to the post that you entered its ID (in our example 1), and you will notice that a new comment has been added.
+analysis
+In the JavaScript file, we extract field values and place them in variables:
+
+
+   user_id = $('#user-id-test').val();
+    post_id = $('#post-id-test').val();
+    content = $('#comment-content-test').val();
+	
+
+ The data array that we will send via Ajax contains 4 elements:
+
+
+
+
+var data = {
+        'action' : 'ultrapress',
+        'trigger_of_circuit' : 'ultra/test',
+        'ultrapress_nonce': $(this).data('nonce'),
+        'args' : {
+          'user_id' : user_id,
+          'comment_post_ID' : post_id,
+          'comment_content' : content,
+        },
+  };
+	
+
+* action: always equal to 'ultrapress'
+* trigger_of_circuit: the circuit hook you want to execute, in this case, 'ultra/test'
+* ultrapress_nonce: For security reasons
+* args: an array containing the arguments of the circuit. 
+
+
+Create circuits
+We will create a circuit that add a new post, and then adds a comment to the newly created post.
+Click the button + in the header. A window will open:
+   
+* trigger of circuit: represents the hook of this circuit, every time this hook is triggered via do_action function, the circuit will be executed. We will give it the value test/add_post_with_comment.
+* name of circuit: the name of the circuit. This name will be used to name the folder in which the circuit will be stored, so it should contain only letters, numbers, - and _. We give it the value test-add-post-with-comment.
+* Description: a brief description of the circuit.
+* choose first component: the key component of the circuit. We'll choose ultra/add_post, which is a component that adds a new post.
+You will get a new circuit. Double click on an empty place in the white area, and add component ultra-add-comment.
+  
+
+ Then link the left output of the component ultra-add-post to the input of ultra-add-comment.
+  
+
+ Edit the arguments of ultra-add-comment. 
+  
+ 
+After adding the new post, the component ultra-add-post will trigger the left hook. And  it will send two arguments, post_id and post_author. 
+   
+and now the argument comment_content:
+  
+
+Save the circuit. Then click run button. You will see this window.
+  
+
+ Fill out the first four fields as shown above.
+Click on the button run circuit, and you will notice that a new post has been added titled ultrapress. Enter it and you will see that a comment has been added to it as expected.
+You can now use this circuit as you wish, and called it via AJAX, programmatically, or via hooks. You can also export it for others to use. To do so, click on the Export button, then on the button export.
+  
+
+ Go to the circuits’s folder in the plugin folder ultrapress, you will find that a new folder named test-add-post-with-comment has been added, this folder contains the data of circuit.
+ultrapress                                              // plugin folder
+--- circuits
+--- --- test-add-post-with-comment
+	
+
+composed components
+Ultrapress allows you to transform any circuit into a composed component, which can be used it in circuits just like any normal component.
+Go to the circuit ultra/test. This circuit adds a comment, then update the option number_of_comments, then adds another comment. We can convert this circuit into a composed component so that it can be used in other circuits.
+Click on the button   :  
+
+
+There are 3 fields:
+* trigger of composed component: represents the hook of the composed component that we want to create. This hook will be used internally to trigger the composed component. We choose the value test/composed_compnent
+* name of composed component: the name of the composed component (test-composed-component).
+* Description: description of the composed component.
+Click the button export. Then reload the Ultrapress page. Click the + button. Create a new circuit:
+  
+
+ Click on the button add Circuit, now you will have a circuit containing the composed component that you created.
+  
+
+ Note that the composed component has four outputs, because it takes all unconnected outputs of the circuit.
+  
+
+Click on the button   , execute the circuit, and you will notice that the composed component will work, and it will add 2 comments.
+  
+
+However, you probably want that the composed component to have only two outputs, one will be triggered in success, and the other one in failure.
+Go back to the circuit ultra/test. Click anywhere in the white area and choose the component ultra-single-node, This component is used in circuits to group outputs.
+
+
+  
+
+Now take all the outputs of the similar circuit and connect them to the component ultra-single-node.
+   
+The component ultra-single-node will be triggered if any of the three outputs connected to it is triggered, i.e. if there is a problem
+Now create another ultra-single-node component and link it to the remaining output.
+  
+
+ Now the circuit has only two free outputs, which will appear in the composed component.
+ You can change the description of the outputs of the component ultra-single-node. Click on the component ultra-single-node on the left and edit its description.
+   
+Do the same with the output of the other component ultra-single-node. Type error, for example.
+  
+
+
+
+Save the circuit and convert it to a composed component:
+   
+Fill out the fields, a new composed component will be created. Reload the page.
+  
+
+ A new composed component has been added, note that this time it has only two outputs, if you click on the left output you will find that its description is success, and the right output describes it as error as we defined in the circuit test.
+A special feature of the component ultra-single-node is that you can add new arguments to it. Notice that the composed component that we have created has two outputs, one is triggered if everything works, and the other is called if a problem occurs, there are 3 problems that can occur.
+   
+
+
+If any of these three errors occurs, the associated ultra-single-node component will be fired. We will add an argument to the component ultra-single-node named error, which will contain a message indicating the nature of the error.
+Right-click on the ultra-single-node rect. Click the button add new arg in the sidebar. A window will be opened to add a new argument:
+   
+to be able to edit the arguments that you added, you should delete all existing links to the component ultra-single-node. to do that double-click on the red circles of the outputs connected to the the component ultra-single-node
+  
+
+reconnect the outputs to the component ultra-single-node.
+Now a new argument has been added to the component ultra-single-node. Go to the output of the key component (ultra-add-comment) associated with the component ultra-single-node.
+  
+
+The message we will send in the argument error is "error in 1st comment". save the circuit, and click the button   .
+You will notice that the right output has an argument called error.
+   
+If you want to share the composed component with others, click the button Export Circuit    in thr header. And choose the composed component, and Ultrapress will load the composed component with the circuit.
+   
+
+
+Activating and deactivating circuits
+Enter the Circuits page menu, you will notice that there is a list of circuit names, deactivate the circuit ultra/test. If you go to the page of ultrapress, you will notice that the circuit has disappeared from the circuits list. However, since it is already stored (in the directory circuits), we can re-activate it, click on the button Activate next to the circuit test.
+Sometimes we may want to do certain things when a circuit is activated or deactivated. For example, the circuit ultra/test, as we know, adds a comment to a post, then updates the value of the option number_of_comments . But what if there is an option named number_of_comments that existed before we activated the circuit. For example, suppose the option number_of_comments  was equal to 'something'. This means that the circuit ultra/test will not function properly. Because it will try to update the value of the option number_of_comments with old_value +1, and we know that old_value contains the value of the old value of option number_of_comments . Ultrapress will replace it with its value, so the expression will read: 1 + something, which will cause a parsing error.
+For this reason we need to set the value of the option number_of_comments to zero every time we activate our circuit. To do so, click anywhere on the white area of a circuit. Click the button add new activate. A new window will open:
+  
+
+In this window you have to choose one of the components, the chosen component will be executed every time you activate the circuit. Choose ultra/ update_option, which updates the options.
+Under the name of the component ultra-update-option, there are two arguments, which are the arguments accepted by the component ultra-update-option.
+  
+
+Fill out the information as shown above and then click button Save. Then click the button next to the argument value.
+   
+We chose literal from the list type of mapping, then we wrote 0 in the text box, this means that ultrapress will pass to the argument value the literal value that you wrote in the text box. That is 0. Save the circuit. Then click on the button Export   .
+  
+
+Now go to the page circuits and deactivate the circuit ultra/test. the activate it again. Ultrapress will run the activate components of the circuit ultra/test. That is, it will execute the component ultra-update-option and pass to it the arguments that we have previously specified. Now reload the Ultrapress page, go to the circuit ultra/test and execute it.
+and you will notice that the value of the option number_of_comments  has been updated to the default value as expected.
+We can also execute some task when the circuit is deactivated. For example, suppose that when the circuit is disabled we want to delete the option number_of_comments .
+Click on the button add new deactivate, and choose the component ultra/ delete_option. 
+  
+
+This component deletes a specific option, and accepts one argument, which is the name of the option. Click the button next to it.
+  
+
+Enter the data above and save the circuit., then export the circuit. Go to the page circuits and deactivate the circuit ultra/test. Ultrapress will now execute the component ultra/delete_option, which will delete the option number_of_comments.
+edit arguments
+There are 4 ways to edit arguments:
+1 – map
+   
+When you choose map, Ultrapress will passes the value of the argument whose name is in the text box. If there is no argument with that name. The component may not work properly.
+
+
+2 - literal
+  
+ 
+If literal is chosen, Ultrapress will take the content of the text box and will replace each appearances of arguments names with its real values. For example in
+number_of_comments = value
+Ultrapress will replace value with its true value. If its value is 35, Ultrapress will convert the above text to:
+number_of_comments = 35
+
+
+3 – function
+   
+Sometimes you may want to perform complex calculations to produce the value of an argument. For example, suppose you want to produce the following comment content:
+number_of_comments = 1
+To do so, choose the option function as shown above, and type in the text box up_get_comment_content. up_get_comment_content should be a function name. This function must be placed in a file called functions.php in the circuit folder. Save the circuit and then export it. Go to the circuit folder and open the file functions.php and type the following:
+
+
+function up_get_comment_content($args) {
+        // $args contain the arguments in list of arguments
+        $number_of_comments = $args[ 'value' ];
+        $message = '<div style="font-size:300%;">number_of_comments <span style="color:blue;"> = </span> <span style="color:red;">  ' . $number_of_comments . ' </span></div>'; 
+        return $message;
+}
+	
+
+
+
+When the circuit is executed, it will add the styled comment.
+
+
+4 - eval
+   
+Sometimes you don't need complicated calculations; all you need is to evaluate a simple expression. In this case, it is better to use eval. In the example above, Ultrapresss will retutn the square value of number of comments: value * value.
+packages 
+packages are similar to plugins, as they do a specific. It consists of several components and circuits that work together to get the task done.
+To create a package click on the button create package in header. A new window will open.
+There are two options, either create a package from scratch, or clone an existing package.
+  
+
+Create a package
+Choose the option "Create Package". Then fill in the fields:
+* Package name: Choose a name for the package, it should contains only letters and numbers, in addition to - and _. For example, we will choose: test-pack
+* Package Description: A brief description of the package.  For example, we will choose: test package
+* Choose circuits: you can add to the package a group of circuits.
+* Choose components: you can add a group of components to the package.
+We will not add any circuits or components to the package in this example. Click the button Create . Then reload the page.
+UltraPress will create a new folder in the packages folder in the plugin folder. This folder contains:
+* Components: folder contains components
+* Templates: folder contains templates
+* Setup.php file
+* data.json file contains the data of package, such as its name, description, the circuits it contains, and components.
+If you now go to the Packages tab in the Ultras tab in admin area, you will notice that a new package called test-pack has been added.
+  
+
+You can now add circuits to the package we created.
+Create a new circuit.
+  
+
+Click the button Add Circuit, fill the fields, then reload the page, then click on any empty space in the circuit area. On the sidebar, you will notice a button update the package. Click on it, a new window will open, choose test-pack from the list.
+  
+
+The circuit will now become part of the package.
+  
+
+You can add to the package any number of circuits you want, and every time you save a circuit that belongs to the package, the package will be updated automatically.
+Activating and deactivating packages
+you can deactivate and activate packages from the page packages.
+
+
+load new packages
+You can laod new packages from the page Add New Package in admin area.
+Enter this page and search the package you want to install. You can also visit website of UltraPress package to browse packages.
+
+
+upload packages
+You can share your package with the world. zip the folder of package that you want to share, then go to this page, fill in the form fields, your package will be added to the package directory, and anyone will be able to download and install your package.
+Templates
+Sometimes you may need to use specific page or post templates. Ultrapress makes this easy. All you need to do is to put your templates in the folder named templates in the circuit folder. The template will be added directly.
+For example, suppose you want a circuit that creates a new page:
+   
+Create a circuit and choose the component ultra/add_page as the key component and click the button add circuit. Then save and export the circuit.
+Go to the circuit folder in the circuits’ folder. You will notice that there is a folder called templates. You can place in This folder the templates you want to use for pages or posts.
+Create a new folder in the Templates folder. Call it test-template. The template folder should contain at least one file, which is the index.php file that contains the template code.
+Create a file in the folder test-template, and name it index.php:
+
+
+<?php
+/*
+Template Name: ultrapress  page Template
+*/
+
+
+get_header(); ?>
+
+
+<div class="container">
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main">
+      <h4> this is a test template </h4>
+      <div id="postbox">  
+        this template is created with ultrapress.
+      </div>
+    </main>
+  </div>
+</div>
+
+
+<?php
+get_footer();
+	Save the file. If you now go to the page Create New Page in the admin area, you will notice that a new template called test-template has been added to the list of templates.
+Return to ultrapress page now. Click on the button   . Type the following:
+   
+
+
+pass the name of the folder that contains the template to the argument  page_template, and the circuit will create the page and link to it the template you specified, i.e. test-template
+Note that there may be another file in the template folder called functions.php, every time ultrapress load the template it will automatically execute this script. It can be used to include any additional programming logic, such as loading JavaScript and CSS files.
+
+
+Create plugins
+With ultrapress you can create plugins without writing a single line of code.
+You can create a plugin from multiple circuits and it will work on WordPress normally even if ultrapress is not installed. This is ideal for web developers who want to harness the power of ultrapress to build websites for their customers.
+Let’s create a plugin.
+Click on the button create plugin    in the top left of the page, a window will open, choose the circuits you want to include in the plugin from the list, then click save. A new plugin will be created and stored in the folder export.
+   
+
+
+Choose the circuit test/update_number_of_comments. And click the button send.
+Go to the folder export; change the file name plugin-name.php to the name you want. Then open the file and fill in the information related to plugin.
+Also, change the name of the file that contains the plugin to the name you previously choosed.
+Now that the plugin is ready, it can be installed on WordPress and will work even if ultrapress is not installed on it.
+Copy the folder to the plugins directory of any WordPress installation, activate the plugin, and you will notice that it works as expected. Every time someone adds a comment, the option number_of_comments will be increased.
+
+
+components
+Sometimes you may not find the component you want, in this case the best solution is to create the component that you need yourself.
+As we said before, components are like scripts or libraries, they are ready-made atomic functions that can be used to build circuits..
+Let's say you want to create a component that adds a comment to a post. This component will need 3 modes:
+* User: represents the ID  of the author of comment
+* Post: represents the ID of the post to which we will add the comment.
+* Content: represents the content of the comment.
+Go to the folder  templates, copy the folder component, and place it in the folder components. Change the folder name to an appropriate name, for example, we will choose test-comp-ultra-add-comment.
+Open the file setup.php. The script contains the general structure of the component.
+At the top of the file you will find the following line:
+if ( ! class_exists( 'class_Name' ) ) {
+Change class_Name to a new name, in order to avoid name collisions, it is preferable to namespace the class. For example, we will choose the name mic_Add_comment.
+Replace class_Name with name mic_Add_Comment in the file.
+
+
+        public static $trigger = 'comp-test/add_comment';  // trigger of component
+	
+
+The property trigger  is a string that will be used to trigger the component. You can use any string you want. To avoid conflicts, it is preferred to use a namespace. For example, we will choose the comp-test/add_comment.
+
+
+                Public static $name = 'test-comp-ultra-add-comment'; // name of component
+	
+
+$Name is the component name, choose an appropriate name, but remember that this name must be a valid folder name. We will choose test-comp-ultra-add-comment.
+
+
+        public static $version = '1.0.0'; 
+	
+
+the property $Version is the component version.
+
+
+Public static $description = 'add new comment (test component)';   // description of component
+	
+
+The property $description is the description version.
+
+
+public static $accepted_args = array(
+                'user_id' => array(
+                        'primal' => 1,
+                        'type_of_variable' => 0,
+                        'required' => 1,
+                        'discription' => '(int) ID of the user who submitted the comment. Default 0.',
+                        'name' => 'comment author',
+                ),
+                'comment_post_ID' => array(
+                        'primal' => 1,
+                        'type_of_variable' => 0,
+                        'required' => 1,
+                        'discription' => '(int) ID of the post that relates to the comment, if any. Default 0.',
+                        'name' => 'ID of the post',
+                ),
+                'comment_content' => array(
+                        'primal' => 0,
+                        'type_of_variable' => 0,
+                        'required' => 1,
+                        'discription' => '(string) The content of the comment. Default empty.',
+                        'name' => 'content of comment',
+                ),
+        );
+	
+
+The array $Accepted_args contains the arguments that the component accepts, in our case there are three arguments, author_id, post_id, and comment_content.
+Each of these arguments can be primal (1) or non-primal (0). Primary arguments are basic arguments that you cannot normally build from other arguments. For this reason, the user_id and post_id arguments are primal.
+The third argument comment_content is non-primal (0). That’s mean that you can calculate it from the first two arguments user_id and post_id. For example, the user may try to pass the content
+'The User with ID: user_id is awesome'
+
+
+If you choose literal from the list type of mapping, and the value of author_id equals, for example, 1, Ultrapress will return this message:
+'The User with ID: 1 is awesome'
+The field required indicates if the argument is required or not. 1 means required, and 0 means non required.
+
+
+public static $additional_input = array(  // additional input  of component
+                nice_name_of_author=> array(
+                        'primal' => 0,
+                        'type_of_variable' => 0,
+                        'required' => 1,
+                        'discription' => 'nice name of the User',
+                        'name' => 'nice_name_of_user',
+                ),
+        );
+	
+
+The property $additional_input is an array containing additional arguments.
+ Let's return to the example above:
+'The User with ID: 1 is awesome'
+
+
+If the user chooses literal from the list type of mapping, and the value of user_id equals, for example, 1, then ultrapress will return this message:
+'The User with ID: 1 is awesome'
+But this message does not look good. You may want to use the username instead of id:
+'The User Adam is awesome'
+We can do this by writing:
+'The User nice_name_of_author is awesome'
+
+
+Where nice_name_of_user is the username of the user. But how to make this name available. Here comes the role of additional arguments, which can be extracted from primal arguments. For example, nice_name_of_user can be extracted from user_id, which is a primal argument.
+The additional arguments are calculated from the primal arguments. This means that the additional argument you want to add can be calculated from the first two arguments, author_id and post_id. For nice_name_of_user, we'll calculate it from author_id. 
+There is a function called filter_args in the script of component, go to it. This method is hooked into a filter hook, to which all primal arguments are passed.
+
+
+public function filter_args($args) {
+                // only primal args
+
+
+                $author_id = $args['author_id'];
+                $post_id = $args['post_id'];
+
+
+                // you can use primal args now
+                $author_data = get_userdata( $author_id );
+                $nice_name_of_author = $author_data->user_nicename;
+
+
+                $args['nice_name_of_author'] = $nice_name_of_author;
+                
+                return $args;
+        }
+	
+
+This function is hooked to the filter hook, which ultrapress will pass to it $args, which is an array that contains all primal arguments..
+
+
+public static $outputs = array(
+                '/success' => array(
+                        'Description' => 'SUCCESS: comment added successfully',
+                        'Name' => 'comment success',
+                        'args' => array(
+                                'comment_id' => array(
+                                'type_of_variable' => '',
+                                'discription' => '(int) The new comments ID',
+                                'name' => 'id of comment',
+                                ),
+                        ),
+                ),
+                '/fail' => array(
+                        'discription' => 'ERROR: comment not added',
+                        'name' => 'comment error',
+                        'args' => array(),
+                )
+        );
+	
+
+The property $outputs is an array containing the outputs of the component. For example, in our case, we want to use two outputs, the first is /success, this output will be triggered if the component succeeds and added the comment. The second output is /fail, which the will be triggered in case of an error. Each output has an 'args' field, which contains the arguments that the output will return. For example, in the case of  '/success', the component will pass one argument, 'comment_id', which is the ID of the newly added comment. On the other hand, the output field  'args' of '/ fail' is blank. That is, the component will not send in this case any argument.
+Go to the method get_component_info.
+
+
+// put the url of component icon here
+                $icon_url = plugin_dir_url( __FILE__ ) . 'img/...';
+                // put the url of outputs icon here
+                $first_output_example = plugin_dir_url( __FILE__ ) . 'img/...';
+            $first_output_example = plugin_dir_url( __FILE__ ) . 'img/...';
+
+
+            self::$outputs[ '/first_output_example' ][ 'output_icon_url' ] = $first_output_example;
+            self::$outputs[ '/first_output_example' ][ 'output_icon_url' ] = $first_output_example;
+
+
+                $icon_url = plugin_dir_url( __FILE__ ) . 'img/...';
+
+
+	
+
+$Icon_url represents the relative path of the component's icon.
+$icon_url = plugin_dir_url( __FILE__ ) . 'img/icon.png';
+
+
+Then specify the relative paths of outputs icons:
+        // put the url of outputs icon here
+        $success_icon = plugin_dir_url( __FILE__ ) . 'img/success-icon';
+         $fail_icon = plugin_dir_url( __FILE__ ) . 'img/fail-icon.png';
+
+
+            self::$outputs[ '/success' ][ 'output_icon_url' ] = $success_icon;
+            self::$outputs[ '/fail' ][ 'output_icon_url' ] = $fail_icon;
+
+
+Now go to the function run. This function will be executed every time the component is called.
+
+
+                $defaults = array(
+                        'author_id' => get_current_user_id(),
+                );
+	
+
+The array $defaults contains the default arguments. For example, we said that the 'author_id' argument is not required. And its default value is the current user ID.
+Under do the work here, add your code:
+
+
+$user_data = get_userdata($args['user_id']);
+
+
+                $comment_data = array(
+                    'comment_post_ID' => $args['comment_post_ID'],
+                    'comment_author' => esc_html ($user_data->user_nicename),
+                    'comment_author_email' => $user_data->user_email,
+                    'comment_content' => esc_html($args['comment_content']),
+                    'user_id' => intval($args['user_id']),
+                    'comment_approved' => 1,
+                );
+
+
+                $comment_id = wp_insert_comment($comment_data);
+We used the arguments passed to us to create the comment.
+if ( empty( $comment_id->errors ) ) {                
+                        $args_success = array(
+                                'comment_id' => $comment_id,
+                        );
+
+
+                        $mp_args['args'] = $args_success;
+                        Micropress_Class::do_action($mp_args, '/success');
+                } else {                
+                        $args_fail = array();
+
+
+                        $mp_args['args'] = $args_fail;
+                        Micropress_Class::do_action($mp_args, '/fail');
+                }
+	
+
+If the comment is added successfully, it will trigger the output hook /success:
+Micropress_Class::do_action($mp_args, '/success');
+
+
+The array $mp_args contains the arguments of the trigger '/success', which we have previously defined in the property $outputs[ '/success'], comment_id. If there is an error, and  the comment was not added successfully, the output '/fail' will be triggered:
+Micropress_Class::do_action($mp_args, '/fail');
+
+
+Save the file. Let's create a new circuit to try this component:
+  
+
+ 
+Save the circuit and then execute it:
+   
+
+
+the component will add a new comment as expected. 
+Add another component that you created again, and link it to the output /success of the first component:
+  
+
+
+
+Notice comment_id in the list of arguments, wich is sent by the first component.
+Now edit the argument comment_content
+   
+
+
+Note that we have 4 arguments available, the first is comment_id and it is coming from the previous component, the second and the third are the primal arguments author_id and post_id, and because comment_content is not primal, all the primal arguments will appears in the list. The fourth argument is nice_name_of_author, witch is the additional argument that we previously set, which we can use in all non-primal arguments.

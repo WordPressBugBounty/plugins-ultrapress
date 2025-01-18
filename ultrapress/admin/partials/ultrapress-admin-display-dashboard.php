@@ -16,6 +16,30 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
+<div style="margin: 20px; padding: 20px; border: 3px solid #2271b1; background: #e6f7f7; border-radius: 8px; animation: pulseBox 3s infinite;">
+  <h2 style="color: #2271b1; font-size: 1.8rem; margin-bottom: 10px;">
+    AI Agents Are Coming Soon to Ultrapress!
+  </h2>
+  <p style="font-size: 1.1rem; color: #444; line-height: 1.6;">
+    We’re gearing up for a revolutionary update that brings advanced AI to WordPress. 
+    <strong>Generate dynamic content, translate posts instantly, summarize pages, and more</strong>—all 
+    from your dashboard with no coding required. 
+  </p>
+  <p style="font-size: 1.1rem; color: #444; font-weight: bold;">
+    Keep Ultrapress active and stay tuned. The new era of AI-powered WordPress websites is closer than you think!
+  </p>
+</div>
+
+<!-- Example simple keyframes for subtle animation, you can put this in a <style> block or CSS file -->
+<style>
+@keyframes pulseBox {
+  0% { transform: scale(1); box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+  50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(34,113,177,0.3); }
+  100% { transform: scale(1); box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+}
+</style>
+
+
 <div class="wrap ultrapress-admin">
     <div class="ultrapress-dashboard-content">
         <div class="ultrapress-welcome-section">
