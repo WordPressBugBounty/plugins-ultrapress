@@ -1,84 +1,46 @@
-﻿=== Ultrapress ===
+﻿=== ultrapress ===
 Contributors: meedawi
 Donate link: https://paypal.me/ultrapress
+Tags: seo, meta, search engine optimization, performance, lightweight
+Requires at least: 4.7
+Tested up to: 6.8
+Requires PHP: 5.6.0
+Stable tag: 2.0.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
-Tags: Visual scripting, components, customization, development, visual development
-Requires at least: 4.7
-Tested up to: 6.7
-Stable tag: 0.0.7
-Requires PHP: 5.6.0
 
-## Coming Soon: AI Agents for WordPress
-
-**Get ready to supercharge your website with AI Agents!** Our next major update to Ultrapress will introduce cutting-edge AI integrations from your favorite providers, like OpenAI and Claude. Imagine seamlessly generating content, instantly translating text, summarizing posts, and more—all within your WordPress admin **without writing a single line of code!**
-
-Stay tuned: once AI Agents arrive in Ultrapress, you'll be able to automate powerful tasks, save hours of manual work, and unlock endless possibilities for your sites and clients. **Keep Ultrapress active** to be among the first to experience the AI revolution in WordPress. Don't miss out on what's coming next!
-
-
-Ultrapress is a meta plugin. I.e. a plugin that creates plugins.
-
-Ultrapress is a visual scripting system to build and connect features and plugins based on the use of graphical elements representing native WordPress mechanisms.
-
-
+A lightweight, no-bloat SEO plugin for WordPress that focuses on the absolute essentials to improve your rankings without slowing down your site.
 
 == Description ==
-Ultrapress is a suite of integrated tools for WordPress developers and users to design and build plugins, features, and circuits without writing a line of code. You can use ultrapress to update post data, add comments, create Shortcodes, and whatever you want.
 
-Ultrapress for plugins is like Elementor for themes, it lets you create plugins and circuits without the need to write any code because it uses a visual scripting system. Instead of writing codes, just bind components inside circuits to create the features you want. 
+There are many fantastic SEO plugins available, but they often try to pack in as many features as possible. The irony is that this can lead to a slower website and a confusing user experience, which ultimately hurts the SEO you're trying to improve.
 
-You can create plugins with ultrapress in minutes and upload them to WordPress directory, and they will work normally even if ultrapress is not installed. Ultrapress is useful for WordPress developers, as they can leverage the power of ultrapress to develop websites for their clients within days, sometimes even hours. 
+**ultrapress takes a different, balanced approach.**
 
-## Prerequisites
-No prior programming Knowledge is required. If you have worked with WordPress before, you will discover that it is very easy to add your own custom features, and build plugins.
-   
-## Why ultrapress?
-WordPress is a content management system, one of WordPress's biggest features, is that it can be expanded with plugins to add new features and functionalities in the areas of SEO, security, search, and more.
+Our philosophy is simple: provide only the essential, high-impact SEO features your website truly needs. We give you the tools to control how search engines see your site, without the unnecessary features that weigh it down.
 
-This is a powerful feature, especially with the huge WordPress Library, which contains more than 50,000 plugins. On the other hand, there is a problem that all WordPress developers know, which is the integrability of plugins.
+With ultrapress, you get:
 
- Wordpress plugins are separate pieces of software composed of multiple scripts. When you have two plugins each performing a different function, you may want to combine them and make them work together as if they were a single plugin.
+*   **Custom SEO Titles:** Take full control over the title tags for your posts and pages.
+*   **Custom Meta Descriptions:** Write compelling meta descriptions to increase click-through rates from search results.
+*   **Extreme Performance:** No bloat. Our plugin is built to be incredibly lightweight and fast, ensuring it never slows down your admin dashboard or your live site.
+*   **Intuitive Interface:** A simple meta box that integrates perfectly into your post editing screen. No complex settings pages to navigate.
 
-Linking two plugins and making them work together as one plugin is a very complex process and takes too much time. Sometimes it is easier to create a new plugin rather than trying to combine two plugins.
-
-Some developers try to address this issue by inserting hooks at certain points of the workflow. While this may provide a partial solution and allow programmers to connect plugins, this solution cannot be relied on because not all plugins have hooks that can be used to integrate with other plugins. And even if these plugins have hooks, to link plugin, you will have to spend a considerable amount of time studying them, trying to understand them, and guessing which hooks are best suited to work with. It is impossible for non-programmers, and annoying and time consuming for WordPress developers.
-
-The developer will eventually find himself spending days, or even weeks, trying to link plugins to get the features he wants. If you have tried this like me, you have probably wasted a lot of time before finally give up and start developing the plugin that you want from scratch. This is annoying, especially that you know that all the features you want already exist in other plugins, but you cannot combine them.
-
-ultrapress solve this problem by introducing a new approach to develop in wordpress. Ultrapress is like a logo game. You can build the features that you want with circuits and components without writing code.
-
-Please refer to  [this page](https://drive.google.com/file/d/17IrXe726QXmoYC-dVpAVsVs-U_nTxaX9/view) for all the technical information and support documentation on the ultrapress plugin.
-
-== Support us ==
-
-Ultrapress is a free plugin, there is no paid version, and no paid add-ons. And it will be free forever.
-
-It’s frustrating to find that most of the plugins that claim to be free aren’t, they give you some free features, many of which are good. But they are careful to close some important features to make the free version useless. This will never happen with Ultrapress, I created this plugin with love and passion. I will not prevent anyone from using this plugin or pressing it for money.
-
-I like to dedicate my time to Ultrapress because I believe in it, I believe that this plugin will help people a lot, whether developers or users. It will change the way they develop, use, and customize WordPress. I have a lot of ideas regarding improving ultrapress and adding many features that make it possible to create a complete website, no matter how large or customized, without writing a single line. This is a huge challenge that will take all my time, I would appreciate any [donation](https://ultra-press.com/donation/) and please give us a good review.
-
-
-
-[youtube https://www.youtube.com/watch?v=mQlrCUliSTM]
-
+If you are tired of overly complicated SEO plugins and want a fast, focused, and effective solution, ultrapress is the perfect choice.
 
 == Installation ==
-1. Download the ultrapress plugin
-2. Upload ‘ultrapress’ to the ‘/wp-content/plugins/’ directory
-3. After upload, from the Plugins screen, you will find a new plugin item called “ultrapress”.
-4. Activate the plugin.
 
-
-== Frequently Asked Questions ==
-
-= Support and Documentation =
-Please refer to [this page](https://drive.google.com/file/d/17IrXe726QXmoYC-dVpAVsVs-U_nTxaX9/view) for all the technical information and support documentation on the ultrapress plugin.
-
-
+1.  Upload the `ultrapress` folder to the `/wp-content/plugins/` directory.
+2.  Activate the plugin through the 'Plugins' menu in WordPress.
+3.  Go to any post or page editor. You will now see the "ultrapress SEO Settings" box where you can add your custom SEO title and meta description.
 
 == Screenshots ==
 
-== Change Log ==
-= 1.0.0 =
+1. The simple and intuitive SEO meta box on the post edit screen.
 
-== Upgrade Notice ==
+== Changelog ==
+
+= 2.0.0 =
+*    Major changes  of the plugin.
+*   Feature: Add SEO Title and Meta Description fields for posts and pages.
+*   Feature: Output title and meta description on the front end.
