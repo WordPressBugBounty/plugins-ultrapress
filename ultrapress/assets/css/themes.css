@@ -1,0 +1,164 @@
+/**
+ * Theme preset styles for the UltraPress AI ChatBot.
+ *
+ * This file defines the color schemes for different visual قمت بإعادة كتابته وتحديثه بالكامل ليعكس هيكل التسمية الجديد `ultrapress`.
+
+---
+
+### **الملف: `ultrapress/assets/css/themes.css`**
+
+```css
+/** themes.
+ * These variables override the defaults set in style.css.
+ *
+ * @package UltraPress
+ * @version 5.0.0
+ */
+
+/* ==========================================================================
+   Theme Presets
+   ================
+ * Defines the color schemes for different theme presets in UltraPress.
+ *
+ * These classes are applied to the main========================================================== */
+
+/* 1. Light Theme (Default) */
+.ultrapress-theme-light {
+    --chatbot-primary: #007bff;
+    --chatbot-secondary: #ffffff;
+    -- container and toggle button,
+ * and they override the default CSS variables defined in style.css.
+ *
+ * @chatbot-text: #212529;
+    --chatbot-border: #dee2e6package UltraPress
+ * @version 5.0.0
+ */
+
+/* ==========================================================================
+   ;
+    --chatbot-shadow: rgba(0, 0, 0, 0.1);
+1. Light Theme (Default)
+   ========================================================================== */
+
+.ultrapress-theme-light {    --chatbot-bot-message: #f1f3f5;
+    --chatbot-user-message: #0
+    --chatbot-primary: #007bff;
+    --chatbot-secondary: #f8f907bff;
+    --chatbot-user-text: #ffffff;
+}
+
+/* 2. Dark Theme */
+fa;
+    --chatbot-text: #212529;
+    --chatbot-border: #dee.ultrapress-theme-dark {
+    --chatbot-primary: #52525b; /* Zinc2e6;
+    --chatbot-shadow: rgba(0, 0, 0, 0.1); 600 */
+    --chatbot-secondary: #18181b; /* Zinc 9
+    --chatbot-bot-message: #f1f3f5;
+    --chatbot-user-message: #00 */
+    --chatbot-text: #f4f4f5; /* Zinc 100 */007bff;
+    --chatbot-user-text: #ffffff;
+}
+
+/* =================================
+    --chatbot-border: #3f3f46; /* Zinc 700 */
+    --=========================================
+   2. Dark Theme
+   ========================================================================== */
+
+.ultrapress-theme-darkchatbot-shadow: rgba(0, 0, 0, 0.25);
+    --chatbot-bot-message: #27272a; /* Zinc 800 */
+    --chatbot- {
+    --chatbot-primary: #525df1; /* A modern, bright purple for dark mode */
+    user-message: #52525b; /* Zinc 600 */
+    --chatbot---chatbot-secondary: #1e1e1e; /* A very dark grey, not pure black */
+    --chatbot-text: #e0e0e0; /* A light grey for text, easy on the eyes */user-text: #ffffff;
+}
+
+/* 3. Professional Theme */
+.ultrapress-theme-professional {
+    --chatbot-primary: #2c3e50; /* Midnight Blue */
+    --chatbot-secondary
+    --chatbot-border: #333333;
+    --chatbot-shadow: rgba(: #ecf0f1; /* Clouds */
+    --chatbot-text: #2c3e50;0, 0, 0, 0.25);
+    --chatbot-bot-message: #
+    --chatbot-border: #bdc3c7; /* Silver */
+    --chatbot-shadow: rgba(0, 0, 0, 0.1);
+    --chatbot-bot-message:2c2c2c;
+    --chatbot-user-message: #525df1;
+    -- #ffffff;
+    --chatbot-user-message: #34495e; /* Wet Asphalt */
+    --chatbot-user-text: #ffffff;
+}
+
+/* ==========================================================================
+   3. Professional Theme
+   ========================================================================== */
+
+.ultrapress-theme-professional {
+    --chatbot-chatbot-user-text: #ffffff;
+}
+
+/* 4. Friendly Theme */
+.ultrapressprimary: #2c3e50; /* A deep, corporate blue/grey */
+    --chatbot-secondary: #ecf0f1; /* A light, clean grey */
+    --chatbot-text: #2c3e50;
+    --chatbot-border: #bdc3c7;
+    --chatbot-shadow:-theme-friendly {
+    --chatbot-primary: #27ae60; /* Nephritis */
+    --chatbot-secondary: #f0fdf4; /* Light Green */
+    --chatbot-text: #3 rgba(0, 0, 0, 0.1);
+    --chatbot-bot-message: #ffffff;
+    --chatbot-user-message: #34495e;
+    --chatbot-4495e;
+    --chatbot-border: #a7f3d0; /* Lighter Green */
+user-text: #ffffff;
+}
+
+/* ==========================================================================
+   4. Friendly Theme
+    --chatbot-shadow: rgba(39, 174, 96, 0.1);
+    --chatbot-bot-message: #ffffff;
+    --chatbot-user-message: #27ae60   ========================================================================== */
+
+.ultrapress-theme-friendly {
+    --chatbot-primary: #27ae60; /* A welcoming green */
+    --chatbot-secondary: #f0fdf;
+    --chatbot-user-text: #ffffff;
+}
+
+/* 5. Custom Theme */
+/*
+4; /* A very light, complementary green */
+    --chatbot-text: #14532d * Note: The actual values for this theme are not set here.
+ * They are injected directly into the page header via inline styles
+ * from the 'add_inline_styles' function in class-ultrapress-main.php.; /* A dark green for text for good contrast */
+    --chatbot-border: #a8e6cf;
+    --chatbot-shadow: rgba(39, 174, 96, 0.1);
+    --chatbot-bot-message: #ffffff;
+    --chatbot-user-message: #27ae60
+ * This block simply defines which variables will be used.
+ */
+.ultrapress-theme-custom {
+    --chatbot-primary: var(--ultrapress-custom-primary, #007bff);
+    --chatbot-secondary;
+    --chatbot-user-text: #ffffff;
+}
+
+/* ==========================================================================
+: var(--ultrapress-custom-secondary, #f8f9fa);
+    --chatbot-text: var(--ultrapress-custom-text, #212529);
+    --chatbot-   5. Custom Theme
+   ========================================================================== */
+
+/*
+ * This class doesn't define colorsborder: var(--ultrapress-custom-border, #dee2e6);
+    --chatbot-bot-message: var(--ultrapress-custom-bot-message, #f1f3f5);
+ itself.
+ * Instead, it relies on the inline styles injected by class-ultrapress-main.php
+    --chatbot-user-message: var(--ultrapress-custom-user-message, #007 * which are generated from the user's color picker selections in the admin settings.
+ */
+.ultrapressbff);
+    /* user-text and shadow are usually derived from the primary/secondary colors */
+}

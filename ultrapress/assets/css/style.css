@@ -1,0 +1,112 @@
+/**
+ * Main stylesheet for the UltraPress AI ChatBot.
+ * @package UltraPress
+ * @version 5.1.0
+ */
+
+:root {
+    /* Dynamically set by PHP */
+    --ultrapress-font-family: system-ui, sans-serif;
+    --ultrapress-font-size: 14px;
+    --ultrapress-window-width: 350px;
+    --ultrapress-window-height: 500px;
+    --ultrapress-bottom-spacing: 20px;
+    --ultrapress-side-spacing: 20px;
+    
+    /* Controlled by themes.css */
+    --chatbot-primary: #007bff;
+    --chatbot-secondary: #f8f9fa;
+    --chatbot-text: #212529;
+    --chatbot-border: #dee2e6;
+    --chatbot-shadow: rgba(0, 0, 0, 0.1);
+    --chatbot-bot-message: #f1f3f5;
+    --chatbot-user-message: #007bff;
+    --chatbot-user-text: #ffffff;
+}
+
+.ultrapress-toggle {
+    position: fixed;
+    /* **THIS IS WHERE THE FIX IS APPLIED** */
+    bottom: var(--ultrapress-bottom-spacing);
+    z-index: 999999;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+}
+
+.ultrapress-icon {
+    width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+    box-shadow: 0 4px 12px var(--chatbot-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ultrapress-toggle:hover .ultrapress-icon {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px var(--chatbot-shadow);
+}
+
+/* **THIS IS WHERE THE FIX IS APPLIED** */
+.ultrapress-toggle.ultrapress-right { right: var(--ultrapress-side-spacing); }
+.ultrapress-toggle.ultrapress-left { left: var(--ultrapress-side-spacing); }
+
+.ultrapress-container {
+    position: fixed;
+    /* **THIS IS WHERE THE FIX IS APPLIED** */
+    bottom: calc(var(--ultrapress-bottom-spacing) + 75px);
+    width: var(--ultrapress-window-width);
+    height: var(--ultrapress-window-height);
+    max-width: calc(100vw - (var(--ultrapress-side-spacing) * 2));
+    max-height: calc(100vh - (var(--ultrapress-bottom-spacing) * 2) - 75px);
+    background: var(--chatbot-secondary);
+    border-radius: 15px;
+    box-shadow: 0 8px 24px var(--chatbot-shadow);
+    display: flex; flex-direction: column; z-index: 999998;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border: 1px solid var(--chatbot-border);
+    color: var(--chatbot-text);
+    font-family: var(--ultrapress-font-family);
+    font-size: var(--ultrapress-font-size);
+}
+
+/* **THIS IS WHERE THE FIX IS APPLIED** */
+.ultrapress-container.ultrapress-right { right: var(--ultrapress-side-spacing); transform-origin: bottom right; }
+.ultrapress-container.ultrapress-left { left: var(--ultrapress-side-spacing); transform-origin: bottom left; }
+
+.ultrapress-hidden { opacity: 0; transform: scale(0.8); pointer-events: none; }
+.ultrapress-header { padding: 15px 20px; background: var(--chatbot-primary); color: var(--chatbot-user-text); border-radius: 15px 15px 0 0; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+.ultrapress-header h4 { margin: 0; font-size: 1.1em; color: inherit; }
+.ultrapress-minimize { cursor: pointer; color: inherit; opacity: 0.8; transition: opacity 0.2s ease, background-color 0.2s ease; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.ultrapress-minimize:hover { opacity: 1; background-color: rgba(0, 0, 0, 0.1); }
+.ultrapress-minimize svg { width: 24px; height: 24px; }
+.ultrapress-messages { flex-grow: 1; padding: 15px; overflow-y: auto; background: var(--chatbot-secondary); }
+.ultrapress-message { margin-bottom: 12px; max-width: 85%; padding: 10px 15px; border-radius: 18px; line-height: 1.5; word-wrap: break-word; }
+.ultrapress-bot-message { background: var(--chatbot-bot-message); color: var(--chatbot-text); margin-right: auto; border-bottom-left-radius: 5px; }
+.ultrapress-user-message { background: var(--chatbot-user-message); color: var(--chatbot-user-text); margin-left: auto; border-bottom-right-radius: 5px; }
+.ultrapress-message.ultrapress-bot-error { background-color: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+.ultrapress-message strong, .ultrapress-message b { font-weight: 600; }
+.ultrapress-message ul, .ultrapress-message ol { margin: 8px 0; padding-left: 20px; }
+.ultrapress-message li { margin-bottom: 4px; }
+.ultrapress-input-container { padding: 10px 15px; background: var(--chatbot-secondary); border-top: 1px solid var(--chatbot-border); border-radius: 0 0 15px 15px; flex-shrink: 0; }
+.ultrapress-input-form { display: flex; gap: 10px; align-items: flex-end; }
+.ultrapress-input { flex-grow: 1; padding: 10px 15px; border: 1px solid var(--chatbot-border); border-radius: 20px; outline: none; font-family: inherit; font-size: inherit; background: #fff; color: var(--chatbot-text); transition: border-color 0.3s ease; resize: none; line-height: 1.5; max-height: 72px; overflow-y: auto; }
+.ultrapress-input:focus { border-color: var(--chatbot-primary); }
+.ultrapress-submit { background: var(--chatbot-primary); color: var(--chatbot-user-text); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s ease, transform 0.2s ease; flex-shrink: 0; }
+.ultrapress-submit:hover { filter: brightness(1.1); }
+.ultrapress-submit svg { width: 20px; height: 20px; }
+.ultrapress-messages::-webkit-scrollbar { width: 6px; }
+.ultrapress-messages::-webkit-scrollbar-track { background: transparent; }
+.ultrapress-messages::-webkit-scrollbar-thumb { background: var(--chatbot-border); border-radius: 3px; }
+.ultrapress-messages::-webkit-scrollbar-thumb:hover { background: var(--chatbot-primary); }
+.ultrapress-typing { display: flex; align-items: center; padding: 12px 15px; }
+.ultrapress-dot { width: 8px; height: 8px; margin: 0 2px; background: var(--chatbot-text); opacity: 0.7; border-radius: 50%; animation: ultrapress-typing 1.2s infinite ease-in-out; }
+@keyframes ultrapress-typing { 0%, 60%, 100% { transform: scale(0.5); } 30% { transform: scale(1); } }
+@media (max-width: 480px) { .ultrapress-container { width: 100%; height: 100%; max-width: 100%; max-height: 100%; bottom: 0; right: 0; left: 0; border-radius: 0; } .ultrapress-header, .ultrapress-input-container { border-radius: 0; } }
+.ultrapress-rtl .ultrapress-container { direction: rtl; text-align: right; }
+.ultrapress-rtl .ultrapress-container.ultrapress-right { right: auto; left: var(--ultrapress-side-spacing); transform-origin: bottom left; }
+.ultrapress-rtl .ultrapress-toggle.ultrapress-right { right: auto; left: var(--ultrapress-side-spacing); }
+.ultrapress-rtl .ultrapress-container.ultrapress-left { left: auto; right: var(--ultrapress-side-spacing); transform-origin: bottom right; }
+.ultrapress-rtl .ultrapress-toggle.ultrapress-left { left: auto; right: var(--ultrapress-side-spacing); }
+.ultrapress-rtl .ultrapress-user-message { margin-left: 0; margin-right: auto; border-bottom-right-radius: 18px; border-bottom-left-radius: 5px; }
+.ultrapress-rtl .ultrapress-bot-message { margin-right: 0; margin-left: auto; border-bottom-left-radius: 18px; border-bottom-right-radius: 5px; }
+.ultrapress-rtl .ultrapress-message ul, .ultrapress-rtl .ultrapress-message ol { padding-left: 0; padding-right: 20px; }
+.ultrapress-rtl .ultrapress-submit svg { transform: scaleX(-1); }

@@ -1,43 +1,47 @@
 <?php
 /**
- * Plugin Name:       ultrapress
- * Plugin URI:        https://wordpress.org/plugins/ultrapress/
- * Description:       A simple and lightweight SEO plugin for WordPress to manage titles and meta descriptions.
- * Version:           2.0.1
+ * Plugin Name:       UltraPress - AI Assistant, Chatbot & SEO
+ * Plugin URI:        https://wordpress.org/plugins/ultrapress
+ * Description:       The AI Brain for your WordPress site. Engage visitors with a smart chatbot and enhance your SEO with AI-powered tools.
+ * Version:           3.0.0
  * Author:            meedawi
- * Author URI:        https://profiles.wordpress.org/meedawi/
- * License:           GPLv3
- * License URI:       https://www.gnu.org/licenses/gpl.html
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       ultrapress
- * Requires at least: 4.7
- * Tested up to:      6.8
- * Requires PHP:      5.6.0
- * Donate link:       https://paypal.me/ultrapress
+ * Domain Path:       /languages
+ * Requires at least: 5.8
+ * Requires PHP:      7.4
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+if (!defined('ABSPATH')) {
+    exit;
 }
 
 /**
- * Define constants
+ * Define core plugin constants for easy access.
  */
-define( 'ULTRAPRESS_VERSION', '2.0.0' );
-define( 'ULTRAPRESS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define('ULTRAPRESS_VERSION', '3.0.0');
+define('ULTRAPRESS_PLUGIN_FILE', __FILE__);
+define('ULTRAPRESS_PLUGIN_DIR', plugin_dir_path(ULTRAPRESS_PLUGIN_FILE));
+define('ULTRAPRESS_PLUGIN_URL', plugin_dir_url(ULTRAPRESS_PLUGIN_FILE));
 
 /**
- * The core plugin classes.
+ * The main plugin class does not exist, load it.
+ * This is the engine of the plugin.
  */
-require ULTRAPRESS_PLUGIN_DIR . 'admin/class-ultrapress-admin.php';
-require ULTRAPRESS_PLUGIN_DIR . 'public/class-ultrapress-public.php';
+if (!class_exists('UltraPress_Main')) {
+    require_once ULTRAPRESS_PLUGIN_DIR . 'includes/class-ultrapress-main.php';
+}
 
 /**
  * Begins execution of the plugin.
+ *
+ * @since    3.0.0
  */
-function run_ultrapress() {
-    new Ultrapress_Admin();
-    new Ultrapress_Public();
+function ultrapress_run() {
+    return UltraPress_Main::instance();
 }
 
-run_ultrapress();
+// Let's get this party started!
+ultrapress_run();
