@@ -3,7 +3,7 @@
  * Plugin Name:       UltraPress - AI Assistant, Chatbot & SEO
  * Plugin URI:        https://wordpress.org/plugins/ultrapress
  * Description:       The AI Brain for your WordPress site. Engage visitors with a smart chatbot and enhance your SEO with AI-powered tools.
- * Version:           3.0.0
+ * Version:           3.0.1
  * Author:            meedawi
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
 /**
  * Define core plugin constants for easy access.
  */
-define('ULTRAPRESS_VERSION', '3.0.0');
+define('ULTRAPRESS_VERSION', '3.0.1');
 define('ULTRAPRESS_PLUGIN_FILE', __FILE__);
 define('ULTRAPRESS_PLUGIN_DIR', plugin_dir_path(ULTRAPRESS_PLUGIN_FILE));
 define('ULTRAPRESS_PLUGIN_URL', plugin_dir_url(ULTRAPRESS_PLUGIN_FILE));

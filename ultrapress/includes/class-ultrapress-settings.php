@@ -3,7 +3,7 @@
  * Handles the creation of the admin menu and all settings pages for UltraPress.
  *
  * @package UltraPress
- * @since 5.0.0
+ * @since 5.2.0
  */
 
 if (!defined('ABSPATH')) {
@@ -28,11 +28,17 @@ class UltraPress_Settings {
     }
 
     public function enqueue_admin_assets($hook) {
-        if (strpos($hook, 'ultrapress') === false) return;
+        // Only load assets on our plugin's pages
+        if (strpos($hook, 'ultrapress') === false) {
+            return;
+        }
         
-        wp_enqueue_script('ultrapress-admin-settings', ULTRAPRESS_PLUGIN_URL . 'assets/js/admin-settings.js', array('jquery'), ULTRAPRESS_VERSION, true);
+        // This script handles the API/Model toggle and Media Uploader
+        wp_enqueue_script('ultrapress-admin-settings', ULTRAPRESS_PLUGIN_URL . 'assets/js/admin-settings.js', array('jquery', 'wp-color-picker'), ULTRAPRESS_VERSION, true);
+        wp_enqueue_style('wp-color-picker');
         
-        if ($hook === 'ultrapress_page_ultrapress-chatbot') {
+        // Localize script with data for the media uploader, but only on the chatbot page
+        if ($hook === 'ultrapress_page_ultrapress-chatbot' || $hook === 'ultrapress_toplevel_page_ultrapress-chatbot') { // Hook can vary
             wp_enqueue_media();
             wp_localize_script('ultrapress-admin-settings', 'ultrapressAdminData', [
                 'uploaderTitle'  => esc_html__('Select or Upload a ChatBot Icon', 'ultrapress'),
@@ -64,7 +70,7 @@ class UltraPress_Settings {
     public function register_settings() {
         register_setting('ultrapress_settings', 'ultrapress_settings', array($this, 'sanitize_settings'));
 
-        // --- AI Brain Page ---
+        // --- AI BRAIN PAGE ---
         add_settings_section('ultrapress_api_section', esc_html__('API Configuration', 'ultrapress'), null, 'ultrapress-ai-brain');
         add_settings_field('api_provider', esc_html__('AI Provider', 'ultrapress'), array($this, 'field_api_provider'), 'ultrapress-ai-brain', 'ultrapress_api_section');
         $providers = $this->get_available_models();
@@ -74,10 +80,10 @@ class UltraPress_Settings {
         }
         add_settings_field('max_tokens', esc_html__('Max Tokens', 'ultrapress'), array($this, 'field_number'), 'ultrapress-ai-brain', 'ultrapress_api_section', ['key' => 'max_tokens', 'default' => 400]);
 
-        // --- Chatbot Page ---
+        // --- CHATBOT PAGE ---
         add_settings_section('ultrapress_chatbot_general_section', esc_html__('General Settings', 'ultrapress'), null, 'ultrapress-chatbot');
         add_settings_field('enable_chatbot_module', esc_html__('Enable Chatbot', 'ultrapress'), array($this, 'field_checkbox'), 'ultrapress-chatbot', 'ultrapress_chatbot_general_section', ['key' => 'enable_chatbot_module', 'label' => 'Activate the AI chatbot on the front-end of your website.']);
-
+        
         add_settings_section('ultrapress_chatbot_behavior_section', esc_html__('Behavior & Content', 'ultrapress'), null, 'ultrapress-chatbot');
         add_settings_field('chatbot_system_prompt', esc_html__('System Prompt / Instructions', 'ultrapress'), array($this, 'field_textarea'), 'ultrapress-chatbot', 'ultrapress_chatbot_behavior_section', ['key' => 'chatbot_system_prompt', 'rows' => 10, 'description' => 'This is the knowledge base for the AI. Provide all company information, product details, and rules here.']);
         add_settings_field('chatbot_contact_info', esc_html__('Contact Info Fallback', 'ultrapress'), array($this, 'field_text'), 'ultrapress-chatbot', 'ultrapress_chatbot_behavior_section', ['key' => 'chatbot_contact_info', 'description' => 'If the AI cannot answer, it will provide this contact info (e.g., an email or phone number).']);
@@ -91,8 +97,14 @@ class UltraPress_Settings {
         add_settings_field('chatbot_position', esc_html__('Chatbot Position', 'ultrapress'), array($this, 'field_select'), 'ultrapress-chatbot', 'ultrapress_chatbot_customization_section', ['key' => 'chatbot_position', 'options' => ['right' => 'Right', 'left' => 'Left']]);
         add_settings_field('chatbot_spacing_side', esc_html__('Side Spacing (px)', 'ultrapress'), array($this, 'field_number'), 'ultrapress-chatbot', 'ultrapress_chatbot_customization_section', ['key' => 'chatbot_spacing_side', 'default' => 20]);
         add_settings_field('chatbot_spacing_bottom', esc_html__('Bottom Spacing (px)', 'ultrapress'), array($this, 'field_number'), 'ultrapress-chatbot', 'ultrapress_chatbot_customization_section', ['key' => 'chatbot_spacing_bottom', 'default' => 20]);
+        add_settings_field('theme_preset', esc_html__('Theme Preset', 'ultrapress'), array($this, 'field_theme_preset'), 'ultrapress-chatbot', 'ultrapress_chatbot_customization_section');
+        add_settings_field('primary_color', esc_html__('Primary Color', 'ultrapress'), array($this, 'field_color_picker'), 'ultrapress-chatbot', 'ultrapress_chatbot_customization_section', ['key' => 'primary_color', 'default' => '#007bff']);
+        add_settings_field('secondary_color', esc_html__('Secondary Color', 'ultrapress'), array($this, 'field_color_picker'), 'ultrapress-chatbot', 'ultrapress_chatbot_customization_section', ['key' => 'secondary_color', 'default' => '#f8f9fa']);
+        add_settings_field('text_color', esc_html__('Text Color', 'ultrapress'), array($this, 'field_color_picker'), 'ultrapress-chatbot', 'ultrapress_chatbot_customization_section', ['key' => 'text_color', 'default' => '#212529']);
+        add_settings_field('font_family', esc_html__('Font Family', 'ultrapress'), array($this, 'field_font_select'), 'ultrapress-chatbot', 'ultrapress_chatbot_customization_section');
+        add_settings_field('font_size', esc_html__('Font Size (px)', 'ultrapress'), array($this, 'field_number'), 'ultrapress-chatbot', 'ultrapress_chatbot_customization_section', ['key' => 'font_size', 'default' => 14]);
         
-        // --- SEO Page ---
+        // --- SEO PAGE ---
         add_settings_section('ultrapress_seo_general_section', esc_html__('General SEO Settings', 'ultrapress'), array($this, 'render_seo_general_description'), 'ultrapress-seo');
         add_settings_field('enable_seo_module', esc_html__('Enable SEO Module', 'ultrapress'), array($this, 'field_checkbox'), 'ultrapress-seo', 'ultrapress_seo_general_section', ['key' => 'enable_seo_module', 'label' => 'Activate the AI-powered SEO meta box in the post editor.']);
     }
@@ -100,7 +112,7 @@ class UltraPress_Settings {
     public function render_seo_general_description() { echo '<p>' . esc_html__('When enabled, a meta box will be added to your post editor. If you leave the SEO title and description fields empty, the AI will automatically generate them for you upon publishing.', 'ultrapress') . '</p>'; }
 
     public function field_api_provider() { $options = get_option('ultrapress_settings', []); $value = $options['api_provider'] ?? 'openai'; $providers = ['openai' => 'OpenAI', 'deepseek' => 'DeepSeek', 'gemini' => 'Google Gemini']; echo "<select id='ultrapress_api_provider_select' name='ultrapress_settings[api_provider]'>"; foreach ($providers as $key => $label) { printf('<option value="%s" %s>%s</option>', esc_attr($key), selected($value, $key, false), esc_html($label)); } echo "</select>"; }
-    public function field_api_key($args) { $provider = $args['provider']; $options = get_option('ultrapress_settings', []); $key = "{$provider}_api_key"; $value = $options[$key] ?? ''; echo "<div class='provider-setting provider-{$provider}'><input type='password' name='ultrapress_settings[{$key}]' value='" . esc_attr($value) . "' class='regular-text'></div>"; }
+    public function field_api_key($args) { $provider = $args['provider']; $options = get_option('ultrapress_settings', []); $key = "{$provider}_api_key"; $value = $options[$key] ?? ''; echo "<div class='provider-setting provider-{$provider}'><input type='password' name='ultrapress_settings[{$key}]' value='" . esc_attr($value) . "' class='regular-text' placeholder='••••••••••••••••••••'></div>"; }
     public function field_model_select($args) { $provider = $args['provider']; $models = $args['models']; $options = get_option('ultrapress_settings', []); $key = "{$provider}_model"; $value = $options[$key] ?? ''; echo "<div class='provider-setting provider-{$provider}'><select name='ultrapress_settings[{$key}]' style='min-width: 300px;'>"; foreach ($models as $model_key => $model_label) { printf('<option value="%s" %s>%s</option>', esc_attr($model_key), selected($value, $model_key, false), esc_html($model_label)); } echo "</select></div>"; }
     public function field_number($args) { $options = get_option('ultrapress_settings', []); $key = $args['key']; $value = $options[$key] ?? ($args['default'] ?? ''); printf('<input type="number" name="ultrapress_settings[%s]" value="%s" class="small-text">', esc_attr($key), esc_attr($value)); }
     public function field_checkbox($args) { $options = get_option('ultrapress_settings', []); $key = $args['key']; $value = $options[$key] ?? 0; printf('<label><input type="checkbox" name="ultrapress_settings[%s]" value="1" %s> %s</label>', esc_attr($key), checked(1, $value, false), esc_html($args['label'] ?? '')); }
@@ -109,34 +121,108 @@ class UltraPress_Settings {
     public function field_select($args) { $options = get_option('ultrapress_settings', []); $key = $args['key']; $value = $options[$key] ?? ($args['default'] ?? ''); echo "<select name='ultrapress_settings[{$key}]'>"; foreach ($args['options'] as $opt_key => $opt_val) { printf('<option value="%s" %s>%s</option>', esc_attr($opt_key), selected($value, $opt_key, false), esc_html($opt_val)); } echo "</select>"; }
     public function field_persona_select() { $options = get_option('ultrapress_settings', []); $value = $options['chatbot_persona'] ?? 'professional'; $personas = $this->get_available_personas(); echo "<select name='ultrapress_settings[chatbot_persona]'>"; foreach ($personas as $key => $label) { printf('<option value="%s" %s>%s</option>', esc_attr($key), selected($value, $key, false), esc_html($label)); } echo "</select>"; }
     public function field_icon_uploader() { $options = get_option('ultrapress_settings', []); $icon_url = $options['chatbot_icon'] ?? ''; $preview_url = !empty($icon_url) ? esc_url($icon_url) : ULTRAPRESS_PLUGIN_URL . 'assets/images/default-icon.svg'; echo '<div class="ultrapress-icon-preview-wrapper" style="margin-bottom: 10px;"><img src="' . $preview_url . '" alt="Icon Preview" style="max-width: 64px; height: auto; border: 1px solid #ddd; padding: 5px;"></div>'; echo '<input type="hidden" id="ultrapress-chatbot-icon-url" name="ultrapress_settings[chatbot_icon]" value="' . esc_attr($icon_url) . '">'; echo '<button type="button" class="button" id="ultrapress-upload-icon-btn">' . esc_html__('Upload Icon', 'ultrapress') . '</button> '; echo '<button type="button" class="button button-secondary" id="ultrapress-reset-icon-btn">' . esc_html__('Reset to Default', 'ultrapress') . '</button>'; }
+    public function field_theme_preset() { $options = get_option('ultrapress_settings', []); $value = $options['theme_preset'] ?? 'light'; $themes = ['light' => __('Light', 'ultrapress'), 'dark' => __('Dark', 'ultrapress'), 'professional' => __('Professional', 'ultrapress'), 'friendly' => __('Friendly', 'ultrapress'), 'custom' => __('Custom Colors', 'ultrapress')]; echo "<select name='ultrapress_settings[theme_preset]'>"; foreach ($themes as $key => $label) { printf('<option value="%s" %s>%s</option>', esc_attr($key), selected($value, $key, false), esc_html($label)); } echo "</select><p class='description'>" . esc_html__('Select "Custom Colors" to use the color pickers below.', 'ultrapress') . "</p>"; }
+    public function field_color_picker($args) { $options = get_option('ultrapress_settings', []); $key = $args['key']; $value = $options[$key] ?? $args['default']; printf('<input type="text" name="ultrapress_settings[%s]" value="%s" class="ultrapress-color-picker">', esc_attr($key), esc_attr($value)); }
+    public function field_font_select() { $options = get_option('ultrapress_settings', []); $value = $options['font_family'] ?? 'system-ui, sans-serif'; $fonts = ['system-ui, sans-serif' => 'System Default', 'Arial, sans-serif' => 'Arial', 'Verdana, sans-serif' => 'Verdana', 'Georgia, serif' => 'Georgia', 'Times New Roman, serif' => 'Times New Roman']; echo "<select name='ultrapress_settings[font_family]'>"; foreach ($fonts as $font_val => $font_label) { printf('<option value="%s" %s>%s</option>', esc_attr($font_val), selected($value, $font_val, false), esc_html($font_label)); } echo "</select>"; }
+    
+    // In class-ultrapress-settings.php
 
-    public function sanitize_settings($input) {
-        $output = get_option('ultrapress_settings', []);
-        
-        // Sanitize API & Brain Settings
-        if (isset($input['api_provider']) && array_key_exists($input['api_provider'], $this->get_available_models())) { $output['api_provider'] = sanitize_key($input['api_provider']); }
-        $all_models = $this->get_available_models();
-        $model_fields = ['openai_model', 'deepseek_model', 'gemini_model'];
-        foreach ($model_fields as $field) { $provider = str_replace('_model', '', $field); if (isset($input[$field]) && isset($all_models[$provider]) && array_key_exists($input[$field], $all_models[$provider])) { $output[$field] = sanitize_key($input[$field]); } }
-        $text_fields = ['openai_api_key', 'deepseek_api_key', 'gemini_api_key', 'chatbot_contact_info', 'chatbot_header_title', 'chatbot_input_placeholder', 'seo_title_template'];
-        foreach ($text_fields as $field) { if (isset($input[$field])) { $output[$field] = sanitize_text_field(trim($input[$field])); } }
-        $numeric_fields = ['max_tokens', 'chatbot_spacing_bottom', 'chatbot_spacing_side', 'window_width', 'window_height', 'font_size'];
-        foreach ($numeric_fields as $field) { if (isset($input[$field])) { $output[$field] = absint($input[$field]); } }
-        
-        // Sanitize Chatbot Settings
-        if (isset($input['chatbot_system_prompt'])) { $output['chatbot_system_prompt'] = sanitize_textarea_field(trim($input['chatbot_system_prompt'])); }
-        if (isset($input['welcome_message'])) $output['welcome_message'] = wp_kses_post($input['welcome_message']);
-        if (isset($input['chatbot_icon'])) $output['chatbot_icon'] = esc_url_raw($input['chatbot_icon']);
-        if (isset($input['chatbot_persona']) && array_key_exists($input['chatbot_persona'], $this->get_available_personas())) { $output['chatbot_persona'] = sanitize_key($input['chatbot_persona']); }
-        if (isset($input['chatbot_position']) && in_array($input['chatbot_position'], ['left', 'right'])) { $output['chatbot_position'] = sanitize_key($input['chatbot_position']); }
-        
-        // Sanitize Checkboxes
-        $output['enable_chatbot_module'] = (isset($input['enable_chatbot_module']) && '1' == $input['enable_chatbot_module']) ? 1 : 0;
-        $output['enable_seo_module'] = (isset($input['enable_seo_module']) && '1' == $input['enable_seo_module']) ? 1 : 0;
+public function sanitize_settings($input) {
+    // Start with a fresh array or load existing options to merge.
+    // Loading existing options is safer to not lose settings from other pages.
+    $output = get_option('ultrapress_settings', []);
 
-        return $output;
+    // Loop through all submitted input and sanitize it based on its key.
+    foreach ($input as $key => $value) {
+        switch ($key) {
+            // --- API Keys & Text Fields ---
+            case 'openai_api_key':
+            case 'deepseek_api_key':
+            case 'gemini_api_key':
+            case 'chatbot_contact_info':
+            case 'chatbot_header_title':
+            case 'chatbot_input_placeholder':
+            case 'font_family': // Font family is a string
+                $output[$key] = sanitize_text_field(trim($value));
+                break;
+            
+            // --- Models (No strict validation, just sanitize) ---
+            case 'openai_model':
+            case 'deepseek_model':
+            case 'gemini_model':
+                $output[$key] = sanitize_text_field(trim($value));
+                break;
+
+            // --- Textareas ---
+            case 'chatbot_system_prompt':
+                $output[$key] = sanitize_textarea_field(trim($value));
+                break;
+            case 'welcome_message':
+                $output[$key] = wp_kses_post($value);
+                break;
+
+            // --- Selects (Key-based validation) ---
+            case 'api_provider':
+                if (array_key_exists($value, $this->get_available_models())) {
+                    $output[$key] = sanitize_key($value);
+                }
+                break;
+            case 'chatbot_persona':
+                if (array_key_exists($value, $this->get_available_personas())) {
+                    $output[$key] = sanitize_key($value);
+                }
+                break;
+            case 'chatbot_position':
+                if (in_array($value, ['left', 'right'])) {
+                    $output[$key] = sanitize_key($value);
+                }
+                break;
+            case 'theme_preset':
+                if (in_array($value, ['light', 'dark', 'professional', 'friendly', 'custom'])) {
+                    $output[$key] = sanitize_key($value);
+                }
+                break;
+            
+            // --- Numeric Fields ---
+            case 'max_tokens':
+            case 'chatbot_spacing_bottom':
+            case 'chatbot_spacing_side':
+            case 'window_width':
+            case 'window_height':
+            case 'font_size':
+                $output[$key] = absint($value);
+                break;
+
+            // --- Color Pickers ---
+            case 'primary_color':
+            case 'secondary_color':
+            case 'text_color':
+                $output[$key] = sanitize_hex_color($value);
+                break;
+
+            // --- URL Fields ---
+            case 'chatbot_icon':
+                $output[$key] = esc_url_raw($value);
+                break;
+
+            // --- Checkboxes ---
+            case 'enable_chatbot_module':
+            case 'enable_seo_module':
+                $output[$key] = ($value == '1') ? 1 : 0;
+                break;
+            
+            // Default for any other fields that might be added
+            default:
+                $output[$key] = sanitize_text_field($value);
+                break;
+        }
     }
 
-    private function get_available_models() { return [ 'openai' => [ 'gpt-4o' => 'GPT-4o (Latest & Best All-Round)', 'gpt-4-turbo' => 'GPT-4 Turbo (Large Context)', 'gpt-3.5-turbo' => 'GPT-3.5 Turbo (Fast & Cost-Effective)', 'gpt-5' => 'GPT-5 (Advanced Reasoning & Coding)', 'gpt-5-mini' => 'GPT-5 Mini (Fast & Capable)', 'gpt-5-nano' => 'GPT-5 Nano (Summaries & Classification)', 'gpt-4o-mini' => 'GPT-4o Mini (Cost-Effective Omni)', 'gpt-4.1' => 'GPT-4.1 (Complex Tasks)', 'gpt-4.1-mini' => 'GPT-4.1 Mini (Balanced Performance)', 'gpt-4.1-nano' => 'GPT-4.1 Nano (Speed Optimized)', 'o3' => 'DeepThought (o3) (Advanced Logic)', 'o3-pro' => 'DeepThought Pro (o3-pro) (Research & Logic)'], 'gemini' => [ 'gemini-1.5-flash-latest' => 'Gemini 1.5 Flash (Fast & Multimodal)', 'gemini-1.5-pro-latest' => 'Gemini 1.5 Pro (Advanced Reasoning)', 'gemini-2.5-pro' => 'Gemini 2.5 Pro (Advanced Reasoning & Coding)', 'gemini-2.5-flash' => 'Gemini 2.5 Flash (High-Volume & Efficiency)', 'gemini-2.5-flash-lite' => 'Gemini 2.5 Flash-Lite (Most Cost-Effective)', 'gemini-live-2.5-flash-preview' => 'Gemini 2.5 Flash Live (Low-Latency Interaction)', 'gemini-2.0-flash' => 'Gemini 2.0 Flash (Next-Gen Features)', 'gemini-pro' => 'Gemini Pro (Legacy)'], 'deepseek' => [ 'deepseek-chat' => 'DeepSeek Chat (General Purpose)', 'deepseek-coder' => 'DeepSeek Coder (Optimized for Code)']]; }
+    return $output;
+}
+
+    private function get_available_models() { return [ 'openai' => [ 'gpt-4o' => 'GPT-4o (Latest & Best All-Round)', 'gpt-4-turbo' => 'GPT-4 Turbo (Large Context)', 'gpt-3.5-turbo' => 'GPT-3.5 Turbo (Fast & Cost-Effective)', 'gpt-5' => 'GPT-5 (Advanced Reasoning & Coding)', 'gpt-5-mini' => 'GPT-5 Mini (Fast & Capable)', 'gpt-5-nano' => 'GPT-5 Nano (Summaries & Classification)', 'gpt-4o-mini' => 'GPT-4o Mini (Cost-Effective Omni)', 'gpt-4.1' => 'GPT-4.1 (Complex Tasks)', 'gpt-4.1-mini' => 'GPT-4.1 Mini (Balanced Performance)', 'gpt-4.1-nano' => 'GPT-4.1 Nano (Speed Optimized)', 'o3' => 'DeepThought (o3) (Advanced Logic)', 'o3-pro' => 'DeepThought Pro (o3-pro) (Research & Logic)'], 'gemini' => [ 'gemini-2.5-pro' => 'Gemini 2.5 Pro (Advanced Reasoning)', 'gemini-2.5-flash' => 'Gemini 2.5 Flash (Fast & Cost-Effective)', 'gemini-2.5-flash-lite' => 'Gemini 2.5 Flash-Lite (High Throughput & Lowest Cost)', 'gemini-1.5-pro-latest' => 'Gemini 1.5 Pro (Legacy - Large Context)'], 'deepseek' => [ 'deepseek-chat' => 'DeepSeek Chat (General Purpose)', 'deepseek-coder' => 'DeepSeek Coder (Optimized for Code)']]; }
     private function get_available_personas() { return [ 'professional' => __('Professional & Formal', 'ultrapress'), 'friendly' => __('Friendly & Conversational', 'ultrapress'), 'enthusiastic_marketer' => __('Enthusiastic & Persuasive (Marketing)', 'ultrapress'), 'technical_support' => __('Technical & Precise (Support)', 'ultrapress'), 'playful' => __('Playful & Creative', 'ultrapress'), 'concise' => __('Concise & Direct (To-the-point)', 'ultrapress')]; }
 }
+
+

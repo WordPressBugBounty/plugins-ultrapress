@@ -14,6 +14,8 @@ jQuery(function ($) {
 
     // --- 1. Media Uploader for ChatBot Icon (Runs on the Chatbot Settings page) ---
     const uploadBtn = $('#ultrapress-upload-icon-btn');
+    // Activate the WordPress color picker on our fields
+    $('.ultrapress-color-picker').wpColorPicker();
     
     if (uploadBtn.length) {
         let mediaUploader;

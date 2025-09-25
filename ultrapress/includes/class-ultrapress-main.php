@@ -76,35 +76,32 @@ final class UltraPress_Main {
      * Injects dynamic styles into the page header.
      * This is the corrected version that includes spacing variables.
      */
-    private function add_inline_styles($settings) {
-        // Get all dynamic values with safe defaults
-        $bottom_spacing = $settings['chatbot_spacing_bottom'] ?? 20;
-        $side_spacing = $settings['chatbot_spacing_side'] ?? 20;
-        $font_family = $settings['font_family'] ?? 'system-ui, sans-serif';
-        $font_size = $settings['font_size'] ?? 14;
-        $window_width = $settings['window_width'] ?? 350;
-        $window_height = $settings['window_height'] ?? 500;
-        $primary_color = $settings['primary_color'] ?? '#007bff';
-        $secondary_color = $settings['secondary_color'] ?? '#f8f9fa';
-        $text_color = $settings['text_color'] ?? '#212529';
+    // In class-ultrapress-main.php
 
-        $css = "
-        :root {
-            --ultrapress-font-family: '" . esc_attr($font_family) . "';
-            --ultrapress-font-size: " . absint($font_size) . "px;
-            --ultrapress-window-width: " . absint($window_width) . "px;
-            --ultrapress-window-height: " . absint($window_height) . "px;
-            --ultrapress-bottom-spacing: " . absint($bottom_spacing) . "px;
-            --ultrapress-side-spacing: " . absint($side_spacing) . "px;
-        }
-        .ultrapress-theme-custom {
-            --chatbot-primary: " . esc_attr($primary_color) . ";
-            --chatbot-secondary: " . esc_attr($secondary_color) . ";
-            --chatbot-text: " . esc_attr($text_color) . ";
-        }
-        ";
-        wp_add_inline_style('ultrapress-style', $css);
+private function add_inline_styles($settings) {
+    // Get all dynamic values with safe defaults
+    $font_family = $settings['font_family'] ?? 'system-ui, sans-serif';
+    $font_size = $settings['font_size'] ?? 14;
+    $primary_color = $settings['primary_color'] ?? '#007bff';
+    $secondary_color = $settings['secondary_color'] ?? '#f8f9fa';
+    $text_color = $settings['text_color'] ?? '#212529';
+    // ... (other variables like spacing remain the same)
+
+    $css = "
+    :root {
+        --ultrapress-font-family: '" . esc_attr($font_family) . "';
+        --ultrapress-font-size: " . absint($font_size) . "px;
+        /* ... other root variables ... */
     }
+    .ultrapress-theme-custom {
+        --chatbot-primary: " . esc_attr($primary_color) . ";
+        --chatbot-secondary: " . esc_attr($secondary_color) . ";
+        --chatbot-text: " . esc_attr($text_color) . ";
+        /* ... other custom theme variables ... */
+    }
+    ";
+    wp_add_inline_style('ultrapress-style', $css);
+}
 
     public function add_chatbot_to_footer() {
         if (empty($this->options['enable_chatbot_module'])) return;

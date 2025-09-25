@@ -4,7 +4,7 @@ Tags: ai, chatbot, assistant, seo, marketing
 Requires at least: 5.8
 Tested up to: 6.8.2
 Requires PHP: 7.4
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
